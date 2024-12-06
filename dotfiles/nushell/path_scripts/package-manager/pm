@@ -1,0 +1,2054 @@
+#!/usr/bin/env nu
+
+##### Variables
+
+const _IsWindows = $nu.os-info.name == "windows" and $nu.os-info.family == "windows"
+const _IsLinux = $nu.os-info.name == "linux" and $nu.os-info.family == "unix"
+const _IsMacOS = $nu.os-info.name == "macos" and $nu.os-info.family == "unix"
+
+let _IsWSL = $_IsLinux and ("/proc/version" | path exists) and (open "/proc/version" | into string | str contains "Microsoft")
+
+const _PatLockfilesBasePath = "~/go/src/devops.patrykadamczyk.net/lockfiles/"
+
+##### Flags
+const _PatPackageManagerUpdateAllGlobalPackages = true
+const _PatPackageManagerUpdateAllUpdatesLockfile = true
+const _PatPackageManagerPreferNalaOverApt = true
+const _PatPackageManagerRustThreads = 8
+const _PatPackageManagerRustNightly = true
+const _PatPackageManagerRustCache = false
+const _PatPackageManagerRustSCache = true
+const _PatPackageManagerRustBinstall = true
+const _PatPackageManagerRustQuickinstall = true
+const _PatPackageManagerRustCargoUpdate = true
+
+# Windows
+
+# Status of WinGet Package Manager
+def "main status winget" [] {
+    if ($_IsWindows == false) {
+        return false
+    }
+    return (which winget | is-not-empty)
+}
+
+# Install package using WinGet
+def "main install winget" [$package: string] {
+    if ((main status winget) == false) {
+        return false
+    }
+    ^winget install --accept-source-agreements --accept-package-agreements $package
+    return true
+}
+
+# Update package using WinGet
+def "main update winget" [$package: string] {
+    if ((main status winget) == false) {
+        return false
+    }
+    ^winget upgrade --accept-source-agreements --accept-package-agreements $package
+    return true
+}
+
+# Uninstall package using WinGet
+def "main uninstall winget" [$package: string] {
+    if ((main status winget) == false) {
+        return false
+    }
+    ^winget uninstall --accept-source-agreements $package
+    return true
+}
+
+# Upgrade packages using WinGet
+def "main upgrade winget" [] {
+    if ((main status winget) == false) {
+        return false
+    }
+    ^winget upgrade --all
+    return true
+}
+
+# Status of Choco Package Manager
+def "main status choco" [] {
+    if ($_IsWindows == false) {
+        return false
+    }
+    return (which choco | is-not-empty)
+}
+
+# Install package using Choco
+def "main install choco" [$package: string] {
+    if ((main status choco) == false) {
+        return false
+    }
+    ^choco install -y $package
+    return true
+}
+
+# Update package using Choco
+def "main update choco" [$package: string] {
+    if ((main status choco) == false) {
+        return false
+    }
+    ^choco upgrade -y $package
+    return true
+}
+
+# Uninstall package using Choco
+def "main uninstall choco" [$package: string] {
+    if ((main status choco) == false) {
+        return false
+    }
+    ^choco uninstall -y $package
+    return true
+}
+
+# Upgrade packages using Choco
+def "main upgrade choco" [] {
+    if ((main status choco) == false) {
+        return false
+    }
+    ^choco upgrade -y all
+    return true
+}
+
+# Status of Scoop Package Manager
+def "main status scoop" [] {
+    if ($_IsWindows == false) {
+        return false
+    }
+    return (which scoop | is-not-empty)
+}
+
+# Install package using Scoop
+def "main install scoop" [$package: string] {
+    if ((main status scoop) == false) {
+        return false
+    }
+    ^scoop install $package
+    return true
+}
+
+# Update package using Scoop
+def "main update scoop" [$package: string] {
+    if ((main status scoop) == false) {
+        return false
+    }
+    ^scoop update $package
+    return true
+}
+
+# Uninstall package using Scoop
+def "main uninstall scoop" [$package: string] {
+    if ((main status scoop) == false) {
+        return false
+    }
+    ^scoop uninstall $package
+    return true
+}
+
+# Upgrade packages using Scoop
+def "main upgrade scoop" [] {
+    if ((main status scoop) == false) {
+        return false
+    }
+    ^scoop upgrade --all
+    return true
+}
+# Linux
+## Distribution
+
+# Status of Apt Package Manager
+def "main status apt" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return ((which apt | is-not-empty) or (which apt-get | is-not-empty))
+}
+
+# Install package using Apt
+def "main install apt" [$package: string] {
+    if ((main status apt) == false) {
+        return false
+    }
+    if (which apt | is-not-empty) {
+        ^apt install -y $package
+    } else {
+        ^apt-get install -y $package
+    }
+    return true
+}
+
+# Update Database of Apt
+def "main update-db apt" [] {
+    if ((main status apt) == false) {
+        return false
+    }
+    if (which apt | is-not-empty) {
+        ^apt update -y
+    } else {
+        ^apt-get update -y
+    }
+    return true
+}
+
+# Update package using Apt
+def "main update apt" [$package: string] {
+    if ((main status apt) == false) {
+        return false
+    }
+    if (which apt | is-not-empty) {
+        ^apt upgrade -y $package
+    } else {
+        ^apt-get upgrade -y $package
+    }
+    return true
+}
+
+# Uninstall package using Apt
+def "main uninstall apt" [$package: string] {
+    if ((main status apt) == false) {
+        return false
+    }
+    if (which apt | is-not-empty) {
+        ^apt remove -y $package
+    } else {
+        ^apt-get remove -y $package
+    }
+    return true
+}
+
+# Upgrade packages using Apt
+def "main upgrade apt" [] {
+    if ((main status apt) == false) {
+        return false
+    }
+    if (which apt | is-not-empty) {
+        ^apt upgrade -y
+        ^apt autoremove -y
+    } else {
+        ^apt-get upgrade -y
+        ^apt-get autoremove -y
+    }
+    return true
+}
+
+# Status of Yum Package Manager
+def "main status yum" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which yum | is-not-empty)
+}
+
+# Install package using Yum
+def "main install yum" [$package: string] {
+    if ((main status yum) == false) {
+        return false
+    }
+    ^yum install -y $package
+    return true
+}
+
+# Update package using Yum
+def "main update yum" [$package: string] {
+    if ((main status yum) == false) {
+        return false
+    }
+    ^yum upgrade -y $package
+    return true
+}
+
+# Uninstall package using Yum
+def "main uninstall yum" [$package: string] {
+    if ((main status yum) == false) {
+        return false
+    }
+    ^yum remove -y $package
+    return true
+}
+
+# Upgrade packages using Yum
+def "main upgrade yum" [] {
+    if ((main status yum) == false) {
+        return false
+    }
+    ^yum upgrade -y
+    return true
+}
+
+# Status of Dnf Package Manager
+def "main status dnf" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which dnf | is-not-empty)
+}
+
+# Install package using Dnf
+def "main install dnf" [$package: string] {
+    if ((main status dnf) == false) {
+        return false
+    }
+    ^dnf install -y $package
+    return true
+}
+
+# Update package using Dnf
+def "main update dnf" [$package: string] {
+    if ((main status dnf) == false) {
+        return false
+    }
+    ^dnf upgrade -y $package
+    return true
+}
+
+# Uninstall package using Dnf
+def "main uninstall dnf" [$package: string] {
+    if ((main status dnf) == false) {
+        return false
+    }
+    ^dnf remove -y $package
+    return true
+}
+
+# Upgrade packages using Dnf
+def "main upgrade dnf" [] {
+    if ((main status dnf) == false) {
+        return false
+    }
+    ^dnf upgrade -y
+    return true
+}
+
+# Status of PacMan Package Manager
+def "main status pacman" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which pacman | is-not-empty)
+}
+
+# Install package using Pacman
+def "main install pacman" [$package: string] {
+    if ((main status pacman) == false) {
+        return false
+    }
+    ^pacman -Syu $package
+    return true
+}
+
+# Update Database of Pacman
+def "main update-db pacman" [] {
+    if ((main status pacman) == false) {
+        return false
+    }
+    ^pacman -Syy
+    return true
+}
+
+# Update package using Pacman
+def "main update pacman" [$package: string] {
+    if ((main status pacman) == false) {
+        return false
+    }
+    ^pacman -Syu $package
+    return true
+}
+
+# Uninstall package using Pacman
+def "main uninstall pacman" [$package: string] {
+    if ((main status pacman) == false) {
+        return false
+    }
+    ^pacman -R $package
+    return true
+}
+
+# Upgrade packages using Pacman
+def "main upgrade pacman" [] {
+    if ((main status pacman) == false) {
+        return false
+    }
+    ^pacman -Syu
+    return true
+}
+
+# Status of Apk Package Manager
+def "main status apk" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which apk | is-not-empty)
+}
+
+# Install package using Apk
+def "main install apk" [$package: string] {
+    if ((main status apk) == false) {
+        return false
+    }
+    ^apk add $package
+    return true
+}
+
+# Update Database of Apk
+def "main update-db apk" [] {
+    if ((main status apk) == false) {
+        return false
+    }
+    ^apk update
+    return true
+}
+
+# Update package using Apk
+def "main update apk" [$package: string] {
+    if ((main status apk) == false) {
+        return false
+    }
+    ^apk upgrade $package
+    return true
+}
+
+# Uninstall package using Apk
+def "main uninstall apk" [$package: string] {
+    if ((main status apk) == false) {
+        return false
+    }
+    ^apk del $package
+    return true
+}
+
+# Upgrade packages using Apk
+def "main upgrade apk" [] {
+    if ((main status apk) == false) {
+        return false
+    }
+    ^apk upgrade
+    return true
+}
+## Alternatives
+
+# Status of Nala Package Manager
+def "main status nala" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which nala | is-not-empty)
+}
+
+# Install package using Nala
+def "main install nala" [$package: string] {
+    if ((main status nala) == false) {
+        return false
+    }
+    ^sudo nala install -y $package
+    return true
+}
+
+# Update Database of Apt using Nala
+def "main update-db nala" [] {
+    if ((main status nala) == false) {
+        return false
+    }
+    ^sudo nala update -y
+    return true
+}
+
+# Update package using Nala
+def "main update nala" [$package: string] {
+    if ((main status nala) == false) {
+        return false
+    }
+    ^sudo nala upgrade -y $package
+    return true
+}
+
+# Uninstall package using Nala
+def "main uninstall nala" [$package: string] {
+    if ((main status nala) == false) {
+        return false
+    }
+    ^sudo nala remove -y $package
+    return true
+}
+
+# Upgrade packages using Nala
+def "main upgrade nala" [] {
+    if ((main status nala) == false) {
+        return false
+    }
+    ^sudo nala upgrade -y
+    ^sudo nala autoremove -y
+    return true
+}
+## Cross Distribution
+
+# Status of PacStall Package Manager
+def "main status pacstall" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which pacstall | is-not-empty)
+}
+
+# Install package using PacStall
+def "main install pacstall" [$package: string] {
+    if ((main status pacstall) == false) {
+        return false
+    }
+    ^pacstall -I $package
+    return true
+}
+
+# Update package using PacStall
+def "main update pacstall" [$package: string] {
+    if ((main status pacstall) == false) {
+        return false
+    }
+    ^pacstall -Up $package
+    return true
+}
+
+# Uninstall package using PacStall
+def "main uninstall pacstall" [$package: string] {
+    if ((main status pacstall) == false) {
+        return false
+    }
+    ^pacstall -R $package
+    return true
+}
+
+# Upgrade packages using PacStall
+def "main upgrade pacstall" [] {
+    if ((main status pacstall) == false) {
+        return false
+    }
+    ^pacstall -Up
+    return true
+}
+
+# Status of Flatpak Package Manager
+def "main status flatpak" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    return (which flatpak | is-not-empty)
+}
+
+# Install package using Flatpak
+def "main install flatpak" [$package: string] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak install -y $package
+    return true
+}
+
+# Update package using Flatpak
+def "main update flatpak" [$package: string] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak update -y $package
+    return true
+}
+
+# Uninstall package using Flatpak
+def "main uninstall flatpak" [$package: string] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak uninstall -y $package
+    return true
+}
+
+# Upgrade packages using Flatpak
+def "main upgrade flatpak" [] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak update -y
+    return true
+}
+
+# Cleanup unused packages using Flatpak
+def "main clean flatpak" [] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak uninstall --unused
+    return true
+}
+
+# Run package using Flatpak
+def "main run flatpak" [$package: string] {
+    if ((main status flatpak) == false) {
+        return false
+    }
+    ^flatpak run $package
+    return true
+}
+
+# Status of Snap Package Manager
+def "main status snap" [] {
+    if ($_IsLinux == false) {
+        return false
+    }
+    if ($_IsWSL == true) {
+        return false
+    }
+    return (which snap | is-not-empty)
+}
+
+# Install package using Snap
+def "main install snap" [$package: string] {
+    if ((main status snap) == false) {
+        return false
+    }
+    ^snap install $package
+    return true
+}
+
+# Update package using Snap
+def "main update snap" [$package: string] {
+    if ((main status snap) == false) {
+        return false
+    }
+    ^snap refresh $package
+    return true
+}
+
+# Uninstall package using Snap
+def "main uninstall snap" [$package: string] {
+    if ((main status snap) == false) {
+        return false
+    }
+    ^snap remove $package
+    return true
+}
+
+# Upgrade packages using Snap
+def "main upgrade snap" [] {
+    if ((main status snap) == false) {
+        return false
+    }
+    ^snap refresh
+    return true
+}
+
+# Cleanup unused packages using Snap
+def "main clean snap" [] {
+    if ((main status snap) == false) {
+        return false
+    }
+    let $oldLang = $env.LANG
+
+    # Set the language to ensure consistent output
+    $env.LANG = "en_US.UTF-8"
+
+    # List all snap packages and filter out disabled ones
+    let $disabledSnaps = (snap list --all
+            | lines
+            | split column --regex '\s+' name version rev tracking publisher notes # Parsing rnap list
+            | where name != "Name"
+            | select name rev notes
+            | where notes =~ "disabled"
+            | select name rev)
+
+    # Loop through each disabled snap and remove it
+    for $snap in $disabledSnaps {
+        # Remove the snap revision
+        print $"Removing ($snap.name) revision ($snap.rev)"
+            input "Click enter to continue..."
+            snap remove $snap.name --revision $snap.rev
+    }
+
+    $env.LANG = $oldLang
+    return true
+}
+# Linux & Mac OS X
+
+# Status of Brew Package Manager
+def "main status brew" [] {
+    if (($_IsLinux or $_IsMacOS) == false) {
+        return false
+    }
+    return (which brew | is-not-empty)
+}
+
+# Install package using Brew
+def "main install brew" [$package: string] {
+    if ((main status brew) == false) {
+        return false
+    }
+    ^brew install $package
+    return true
+}
+
+# Update Database of Brew
+def "main update-db brew" [] {
+    if ((main status brew) == false) {
+        return false
+    }
+    ^brew update
+    return true
+}
+
+# Update package using Brew
+def "main update brew" [$package: string] {
+    if ((main status brew) == false) {
+        return false
+    }
+    ^brew upgrade $package
+    return true
+}
+
+# Uninstall package using Brew
+def "main uninstall brew" [$package: string] {
+    if ((main status brew) == false) {
+        return false
+    }
+    ^brew uninstall $package
+    return true
+}
+
+# Upgrade packages using Brew
+def "main upgrade brew" [] {
+    if ((main status brew) == false) {
+        return false
+    }
+    ^brew update
+    ^brew upgrade
+    return true
+}
+
+# Status of Nix Package Manager
+def "main status nix" [] {
+    if (($_IsLinux or $_IsMacOS) == false) {
+        return false
+    }
+    return ((which nix | is-not-empty) or (which nix-env | is-not-empty) or (which nix-channel | is-not-empty))
+}
+
+# Install package using Nix
+def "main install nix" [$package: string] {
+    if ((main status nix) == false) {
+        return false
+    }
+    ^nix-env -iA $package
+    return true
+}
+
+# Update Database of Nix
+def "main update-db nix" [] {
+    if ((main status nix) == false) {
+        return false
+    }
+    ^nix-channel --update
+    return true
+}
+
+# update package using Nix
+def "main update nix" [$package: string] {
+    if ((main status nix) == false) {
+        return false
+    }
+    ^nix-env -uA $package
+    return true
+}
+
+# Uninstall package using Nix
+def "main uninstall nix" [$package: string] {
+    if ((main status nix) == false) {
+        return false
+    }
+    ^nix-env --uninstall $package
+    return true
+}
+
+# Status of Nix Home Manager Package Manager
+def "main status homemanager" [] {
+    return (which home-manager | is-not-empty)
+}
+
+# Upgrade packages using Nix Home Manager
+def "main upgrade homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Upgrade packages using Nix Home Manager
+def "main clean-upgrade homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # GC of nix
+    ^nix-collect-garbage
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Upgrade packages using Nix Home Manager
+def "main deepclean-upgrade homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # GC of nix
+    ^nix-collect-garbage --delete-old
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Upgrade packages using Nix Home Manager
+def "main clean homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # GC of nix
+    ^nix-collect-garbage
+    return true
+}
+
+# Upgrade packages using Nix Home Manager
+def "main deepclean homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # GC of nix
+    ^nix-collect-garbage --delete-old
+    return true
+}
+
+# Update fast ring using Nix Home Manager
+def "main update homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    enter ~/.config/home-manager
+    ^nix flake update
+    dexit
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Update fast ring using Nix Home Manager
+def "main update homemanager fast-ring" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    enter ~/.config/home-manager
+    ^nix flake update
+    dexit
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Update slow ring using Nix Home Manager
+def "main update homemanager slow-ring" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    enter ~/.config/home-manager
+    open ~/.config/home-manager/flake.nix
+        | lines
+        | each {
+            if ($in | str trim | str starts-with "nixpkgs_slow_ring.url =") {
+                $in
+                    | split row "\""
+                    | each {
+                        if ($in | str starts-with "github:nixos/nixpkgs/") {
+                            $"github:nixos/nixpkgs/(
+                                ^gh api $"repos/nixos/nixpkgs/branches/master" --jq ".commit.sha"
+                            )"
+                        } else {
+                            $in
+                        }
+                    }
+                    | str join "\""
+            } else {
+                $in
+            }
+        }
+        | save -f ./flake.nix
+    ^nix flake update
+    dexit
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Update slowest ring using Nix Home Manager
+def "main update homemanager slowest-ring" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    enter ~/.config/home-manager
+    open ~/.config/home-manager/flake.nix
+        | lines
+        | each {
+            if ($in | str trim | str starts-with "nixpkgs_slowest_ring.url =") {
+                $in
+                    | split row "\""
+                    | each {
+                        if ($in | str starts-with "github:nixos/nixpkgs/") {
+                            $"github:nixos/nixpkgs/(
+                                ^gh api $"repos/nixos/nixpkgs/branches/master" --jq ".commit.sha"
+                            )"
+                        } else {
+                            $in
+                        }
+                    }
+                    | str join "\""
+            } else {
+                $in
+            }
+        }
+        | save -f ./flake.nix
+    ^nix flake update
+    dexit
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    # Force home-manager to work properly (first errors out about news files for some reason)
+    ^home-manager switch --impure
+    ^home-manager switch --impure
+    return true
+}
+
+# Run package without installing it using Nix Home Manager
+def "main run-remote homemanager" [$package: string] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    ^nix-shell -p $package
+    return true
+}
+
+# Read news using Nix Home Manager
+def "main news homemanager" [] {
+    if ((main status homemanager) == false) {
+        return false
+    }
+    $env.NIXPKGS_ALLOW_UNFREE = 1
+    ^home-manager news
+    return true
+}
+# Mac OS X
+
+# Status of Brew Casks Package Manager
+def "main status brewcask" [] {
+    if ($_IsMacOS == false) {
+        return false
+    }
+    return (which brew | is-not-empty)
+}
+
+# Install package using Brew Casks
+def "main install brewcask" [$package: string] {
+    if ((main status brewcask) == false) {
+        return false
+    }
+    ^brew install --cask $package
+    return true
+}
+
+# update package using Brew Casks
+def "main update brewcask" [$package: string] {
+    if ((main status brewcask) == false) {
+        return false
+    }
+    ^brew upgrade --cask $package
+    return true
+}
+
+# Uninstall package using Brew Casks
+def "main uninstall brewcask" [$package: string] {
+    if ((main status brewcask) == false) {
+        return false
+    }
+    ^brew uninstall --cask $package
+    return true
+}
+
+# Upgrade packages using Brew Casks
+def "main upgrade brewcask" [] {
+    if ((main status brewcask) == false) {
+        return false
+    }
+    ^brew update --cask
+    ^brew upgrade --cask
+    return true
+}
+
+# Status of Mas Package Manager
+def "main status mas" [] {
+    if ($_IsMacOS == false) {
+        return false
+    }
+    return (which mas | is-not-empty)
+}
+
+# Install package using Mas
+def "main install mas" [$package: string] {
+    if ((main status mas) == false) {
+        return false
+    }
+    ^mas install $package
+    return true
+}
+
+# update package using Mas
+def "main update mas" [$package: string] {
+    if ((main status mas) == false) {
+        return false
+    }
+    ^mas upgrade $package
+    return true
+}
+
+# Uninstall package using Mas
+def "main uninstall mas" [$package: string] {
+    if ((main status mas) == false) {
+        return false
+    }
+    ^mas uninstall $package
+    return true
+}
+
+# Upgrade packages using Mas
+def "main upgrade mas" [] {
+    if ((main status mas) == false) {
+        return false
+    }
+    ^mas upgrade
+    return true
+}
+# Special
+
+# Status of dotfiles
+def "main status dotfiles" [] {
+    if (("~/go/src/devops.patrykadamczyk.net" | path expand | path exists) == false) {
+        return false
+    }
+    if (which git | is-empty) {
+        return false
+    }
+    return true
+}
+
+# Install dotfiles
+def "main install dotfiles" [] {
+    if ((main status dotfiles) == false) {
+        return false
+    }
+    enter "~/go/src/devops.patrykadamczyk.net"
+    ./Install.nu
+    dexit
+    return true
+}
+
+# Upgrade dotfiles
+def "main upgrade dotfiles" [] {
+    if ((main status dotfiles) == false) {
+        return false
+    }
+    enter "~/go/src/devops.patrykadamczyk.net"
+    git fetch
+    git pull
+    ./Install.nu
+    dexit
+    return true
+}
+
+# Update dotfiles
+def "main update dotfiles" [] {
+    return (main upgrade dotfiles)
+}
+
+# Status of Git Package Manager
+def "main status git" [] {
+    return (which git | is-not-empty)
+}
+
+# Install package using Git
+def "main install git" [$package: string] {
+    if ((main status git) == false) {
+        return false
+    }
+    let url = ($package | url parse)
+    let path = ($"~/go/src/($url.host)($url.path)" | str reverse | str replace "tig." "" | str reverse)
+    print $"Installing: ($package)"
+    print $"Into: ($path)"
+    input "Does this sound correct? (Enter yes, Ctrl-C no)"
+    ^git clone --recurse-submodules $package $path
+    return true
+}
+
+# Update package using Git
+def "main update git" [$package: string] {
+    if ((main status git) == false) {
+        return false
+    }
+    let path = $"~/go/src/($package)"
+    if (($path | path exists) == false) {
+        return false
+    }
+    enter $path
+    ^git fetch
+    ^git pull --recurse-submodules
+    dexit
+    return true
+}
+
+# Uninstall package using Git
+def "main uninstall git" [$package: string] {
+    if ((main status git) == false) {
+        return false
+    }
+    let path = $"~/go/src/($package)"
+    if (($path | path exists) == false) {
+        return false
+    }
+    rm -r $path
+    return true
+}
+
+# Status of GitHub Package Manager
+def "main status gh" [] {
+    return ((which git | is-not-empty) and (which gh | is-not-empty))
+}
+
+# Install package using GitHub
+def "main install gh" [$package: string] {
+    if ((main status gh) == false) {
+        return false
+    }
+    let path = if ($package | str starts-with "https") {
+        $"~/go/src/(($package | url parse).host)(($package | url parse).path)"
+            | str reverse
+            | str replace "tig." ""
+            | str reverse
+    } else if ($package | str starts-with "git@github.com") {
+         $"~/go/src/github.com/($package
+            | str replace "git@github.com" ""
+            | str replace ':' ""
+            | str reverse
+            | str replace "tig." ""
+            | str reverse
+        )"
+    } else if ($package | str contains "@") {
+        $"git://($package)"
+            | str reverse
+            | str replace ":" "/"
+            | str reverse
+            | url parse
+            | $"~/go/src/($in.host)($in.path)"
+            | str reverse
+            | str replace "tig." ""
+            | str reverse
+    } else {
+        $"~/go/src/github.com/($package)"
+    }
+    print $"Installing: ($package)"
+    print $"Into: ($path)"
+    input "Does this sound correct? (Enter yes, Ctrl-C no)"
+    ^gh repo clone $package $path -- --recurse-submodules
+    return true
+}
+
+# Update package using GitHub
+def "main update gh" [$package: string] {
+    if ((main status gh) == false) {
+        return false
+    }
+    let path = $"~/go/src/($package)"
+    if (($path | path exists) == false) {
+        return false
+    }
+    enter $path
+    ^git fetch
+    ^git pull --recurse-submodules
+    dexit
+    return true
+}
+
+# Uninstall package using GitHub
+def "main uninstall gh" [$package: string] {
+    if ((main status gh) == false) {
+        return false
+    }
+    let path = $"~/go/src/($package)"
+    if (($path | path exists) == false) {
+        return false
+    }
+    rm -r $path
+    return true
+}
+# Language specific package managers - global packages
+## JavaScript
+
+# Status of NPM Package Manager
+def "main status npm" [] {
+    return (which npm | is-not-empty)
+}
+
+# Install package using NPM
+def "main install npm" [$package: string] {
+    if ((main status npm) == false) {
+        return false
+    }
+    ^npm install -g $package
+    return true
+}
+
+# Update package using NPM
+def "main update npm" [$package: string] {
+    if ((main status npm) == false) {
+        return false
+    }
+    ^npm update -g $package
+    return true
+}
+
+# Uninstall package using NPM
+def "main uninstall npm" [$package: string] {
+    if ((main status npm) == false) {
+        return false
+    }
+    ^npm uninstall -g $package
+    return true
+}
+
+# Upgrade packages using NPM
+def "main upgrade npm" [] {
+    if ((main status npm) == false) {
+        return false
+    }
+    ^npm update -g
+    return true
+}
+
+# Run package without installing it using NPM
+def "main run-remote npm" [$package: string] {
+    if ((main status npm) == false) {
+        return false
+    }
+    ^npx $package
+    return true
+}
+
+# Update lockfile of NPM in dotfiles
+def "main update-lockfile npm" [] {
+    if ((main status npm) == false) {
+        return false
+    }
+    const path = $"($_PatLockfilesBasePath)npm.json"
+    mkdir ($_PatLockfilesBasePath | path expand)
+    print $"Updating lockfile at: ($path)"
+    ^npm list -g --json | save -f ($path | path expand)
+    print "Lockfile updated"
+    return true
+}
+
+# Status of PNPM Package Manager
+def "main status pnpm" [] {
+    return (which pnpm | is-not-empty)
+}
+
+# Install package using PNPM
+def "main install pnpm" [$package: string] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    ^pnpm install -g $package
+    return true
+}
+
+# Update package using PNPM
+def "main update pnpm" [$package: string] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    ^pnpm update -g $package
+    return true
+}
+
+# Uninstall package using PNPM
+def "main uninstall pnpm" [$package: string] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    ^pnpm uninstall -g $package
+    return true
+}
+
+# Upgrade packages using PNPM
+def "main upgrade pnpm" [] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    ^pnpm update -g
+    return true
+}
+
+# Run package without installing it using PNPM
+def "main run-remote pnpm" [$package: string] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    ^pnpm dlx $package
+    return true
+}
+
+# Update lockfile of PNPM in dotfiles
+def "main update-lockfile pnpm" [] {
+    if ((main status pnpm) == false) {
+        return false
+    }
+    let base_path = ($"($_PatLockfilesBasePath)pnpm" | path expand)
+    let path = $"($base_path)/list.json"
+    let pack_path = $"($base_path)/package.json"
+    let lock_path = $"($base_path)/pnpm-lock.yaml"
+    mkdir $base_path
+    print $"Updating lockfile at: ($path)"
+    ^pnpm list -g --json | save -f ($path | path expand)
+    print $"Finding package.json and pnpm-lock.yaml"
+    let dir = ($"(^pnpm root -g)/../" | path expand)
+    print $"Updating package.json at: ($pack_path)"
+    cp $"($dir)/package.json" $pack_path
+    print $"Updating pnpm-lock.yaml at: ($lock_path)"
+    cp $"($dir)/pnpm-lock.yaml" $lock_path
+    print "Lockfile updated"
+    return true
+}
+
+# Status of YARN Package Manager
+def "main status yarn" [] {
+    return (which yarn | is-not-empty)
+}
+
+# Install package using YARN
+def "main install yarn" [$package: string] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    ^yarn global add $package
+    return true
+}
+
+# Update package using YARN
+def "main update yarn" [$package: string] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    ^yarn global upgrade $package
+    return true
+}
+
+# Uninstall package using YARN
+def "main uninstall yarn" [$package: string] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    ^yarn global remove $package
+    return true
+}
+
+# Upgrade packages using YARN
+def "main upgrade yarn" [] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    ^yarn global upgrade
+    return true
+}
+
+# Run package without installing it using YARN
+def "main run-remote yarn" [$package: string] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    ^yarn dlx $package
+    return true
+}
+
+# Update lockfile of YARN in dotfiles
+def "main update-lockfile yarn" [] {
+    if ((main status yarn) == false) {
+        return false
+    }
+    let base_path = ($"($_PatLockfilesBasePath)yarn" | path expand)
+    let path = $"($base_path)/list.json"
+    let pack_path = $"($base_path)/package.json"
+    let lock_path = $"($base_path)/yarn.lock"
+    mkdir $base_path
+    print $"Updating lockfile at: ($path)"
+    ^yarn global list --json --no-progress | save -f ($path | path expand)
+    print $"Finding package.json and yarn.lock"
+    # Format should be like that {"type":"log","data":"/home/patryk/.config/yarn/global"}
+    let dir = (^yarn global dir --json --no-progress | from json).data
+    print $"Updating package.json at: ($pack_path)"
+    cp $"($dir)/package.json" $pack_path
+    print $"Updating yarn.lock at: ($lock_path)"
+    cp $"($dir)/yarn.lock" $lock_path
+    print "Lockfile updated"
+    return true
+}
+
+# Status of BUN Package Manager
+def "main status bun" [] {
+    return (which bun | is-not-empty)
+}
+
+# Install package using BUN
+def "main install bun" [$package: string] {
+    if ((main status bun) == false) {
+        return false
+    }
+    ^bun install -g $package
+    return true
+}
+
+# Update package using BUN
+def "main update bun" [$package: string] {
+    if ((main status bun) == false) {
+        return false
+    }
+    ^bun update -g $package
+    return true
+}
+
+# Uninstall package using BUN
+def "main uninstall bun" [$package: string] {
+    if ((main status bun) == false) {
+        return false
+    }
+    ^bun remove -g $package
+    return true
+}
+
+# Upgrade packages using BUN
+def "main upgrade bun" [] {
+    if ((main status bun) == false) {
+        return false
+    }
+    ^bun update -g
+    return true
+}
+
+# Run package without installing it using BUN
+def "main run-remote bun" [$package: string] {
+    if ((main status bun) == false) {
+        return false
+    }
+    ^bunx $package
+    return true
+}
+
+# Update lockfile of BUN in dotfiles
+def "main update-lockfile bun" [] {
+    if ((main status bun) == false) {
+        return false
+    }
+    let base_path = ($"($_PatLockfilesBasePath)bun" | path expand)
+    let path = $"($base_path)/list.log"
+    let pack_path = $"($base_path)/package.json"
+    let lock_path = $"($base_path)/bun.lockb"
+    mkdir $base_path
+    print $"Updating lockfile at: ($path)"
+    ^bun main ls -g | save -f $path
+    print $"Finding package.json and bun.lockb"
+    let dir = ($"(^bun pm cache -g)/../global/" | path expand)
+    print $"Updating package.json at: ($pack_path)"
+    cp $"($dir)/package.json" $pack_path
+    print $"Updating bun.lockb at: ($lock_path)"
+    cp $"($dir)/bun.lockb" $lock_path
+    print "Lockfile updated"
+    return true
+}
+## Python
+
+# Status of PIP Package Manager
+def "main status pip" [] {
+    return ((which pip3 | is-not-empty) or (which pip | is-not-empty))
+}
+
+# Install package using PIP
+def "main install pip" [$package: string] {
+    if ((main status pip) == false) {
+        return false
+    }
+    if (which pip3 | is-not-empty) {
+        ^pip3 install $package
+    } else {
+        ^pip install $package
+    }
+    return true
+}
+
+# Update package using PIP
+def "main update pip" [$package: string] {
+    if ((main status pip) == false) {
+        return false
+    }
+    if (which pip3 | is-not-empty) {
+        ^pip3 install --upgrade $package
+    } else {
+        ^pip install --upgrade $package
+    }
+    return true
+}
+
+# Uninstall package using PIP
+def "main uninstall pip" [$package: string] {
+    if ((main status pip) == false) {
+        return false
+    }
+    if (which pip3 | is-not-empty) {
+        ^pip3 uninstall $package
+    } else {
+        ^pip uninstall $package
+    }
+    return true
+}
+
+# Upgrade packages using PIP
+def "main upgrade pip" [] {
+    if ((main status pip) == false) {
+        return false
+    }
+    let temp_requirements = (mktemp -t --suffix .txt)
+    if (which pip3 | is-not-empty) {
+        ^pip3 freeze | str replace -a "==" ">=" | save -f $temp_requirements
+        ^pip3 install --upgrade -r $temp_requirements
+    } else {
+        ^pip freeze | str replace -a "==" ">=" | save -f $temp_requirements
+        ^pip install --upgrade -r $temp_requirements
+    }
+    rm $temp_requirements
+    return true
+}
+
+# Update lockfile of PIP in dotfiles
+def "main update-lockfile pip" [] {
+    if ((main status pip) == false) {
+        return false
+    }
+    const path = ($"($_PatLockfilesBasePath)pip.txt" | path expand)
+    mkdir ($_PatLockfilesBasePath | path expand)
+    print $"Updating lockfile at: ($path)"
+    if (which pip3 | is-not-empty) {
+        ^pip3 freeze | save -f $path
+    } else {
+        ^pip freeze | save -f $path
+    }
+    print "Lockfile updated"
+    return true
+}
+
+# Status of PIPX Package Manager
+def "main status pipx" [] {
+    return (which pipx | is-not-empty)
+}
+
+# Install package using PIPX
+def "main install pipx" [$package: string] {
+    if ((main status pipx) == false) {
+        return false
+    }
+    ^pipx install $package
+    return true
+}
+
+# Update package using PIPX
+def "main update pipx" [$package: string] {
+    if ((main status pipx) == false) {
+        return false
+    }
+    ^pipx upgrade $package
+    return true
+}
+
+# Uninstall package using PIPX
+def "main uninstall pipx" [$package: string] {
+    if ((main status pipx) == false) {
+        return false
+    }
+    ^pipx uninstall $package
+    return true
+}
+
+# Upgrade packages using PIPX
+def "main upgrade pipx" [] {
+    if ((main status pipx) == false) {
+        return false
+    }
+    ^pipx upgrade-all
+    return true
+}
+
+# Update lockfile of PIPX in dotfiles
+def "main update-lockfile pipx" [] {
+    if ((main status pipx) == false) {
+        return false
+    }
+    const path = ($"($_PatLockfilesBasePath)pipx.json" | path expand)
+    mkdir ($_PatLockfilesBasePath | path expand)
+    print $"Updating lockfile at: ($path)"
+    ^pipx list --json | save -f $path
+    print "Lockfile updated"
+    return true
+}
+## Go
+
+# Status of GO Package Manager
+def "main status go" [] {
+    return (which go | is-not-empty)
+}
+
+# Install package using GO
+def "main install go" [$package: string] {
+    if ((main status go) == false) {
+        return false
+    }
+    ^go install $package
+    return true
+}
+
+# Update package using GO
+def "main update go" [$package: string] {
+    if ((main status go) == false) {
+        return false
+    }
+    ^go install $package
+    return true
+}
+
+# Update package using GO using commit hash instead of default handling (tags)
+def "main force-update go" [$package: string] {
+    if ((main status go) == false) {
+        return false
+    }
+    if (which gh | is-empty) {
+        return false
+    }
+    let PackageName = $package | split row "@" | first
+    mut BranchName = $package | split row "@" | last
+    if ($BranchName == $PackageName) {
+        $BranchName = "main"
+    }
+    let $branchSha = (gh api $"repos/($PackageName)/branches/($BranchName)" --jq ".commit.sha")
+    ^go install $"github.com/($PackageName)@($branchSha)"
+    return true
+}
+
+# Update lockfile of GO in dotfiles
+def "main update-lockfile go" [] {
+    if ((main status go) == false) {
+        return false
+    }
+    const path = $"($_PatLockfilesBasePath)go.json"
+    mkdir ($_PatLockfilesBasePath | path expand)
+    print $"Updating lockfile at: ($path)"
+    enter ~/go/src
+    let dirs = (glob --depth 2 **/)
+    mut result = []
+    for repo in $dirs {
+        if ($repo | is-empty) {
+            continue
+        }
+        if (($repo | path exists) == false) {
+            continue
+        }
+        if (($repo | path type) != "dir") {
+            continue
+        }
+        enter $repo
+        mut HEAD = ""
+        try {
+            $HEAD = (^git rev-parse HEAD | complete).stdout
+        }
+        let res = [[$repo $HEAD]]
+        dexit
+        $result = $result | append $res
+    }
+    dexit
+    $result | filter { $in.1 != "" } | to json | save -f $path
+    print "Lockfile updated"
+    return true
+}
+## Rust
+
+# Status of RUST Package Manager
+def "main status rust" [] {
+    return ((which rustc | is-not-empty) and (which cargo | is-not-empty))
+}
+
+# Check if you can use rust nightly
+def "main status rust nightly" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    if ($_PatPackageManagerRustNightly == false) {
+        return false
+    }
+    try {
+        cargo +nightly version | complete
+        return true
+    } catch {
+        return false
+    }
+}
+
+# Check if you can use scache for compiler cache
+def "main status rust scache" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    if ($_PatPackageManagerRustSCache == false) {
+        return false
+    }
+    return (which scache | is-not-empty)
+}
+
+# Check if you can use cargo binstall for faster installations
+def "main status rust binstall" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    if ($_PatPackageManagerRustBinstall == false) {
+        return false
+    }
+    return (which cargo-binstall | is-not-empty)
+}
+
+# Check if you can use cargo quickinstall for faster installations
+def "main status rust quickinstall" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    if ($_PatPackageManagerRustQuickinstall == false) {
+        return false
+    }
+    return (which cargo-quickinstall | is-not-empty)
+}
+
+# Check if you can use cargo install-update for faster installations and updates
+def "main status rust cargo-update" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    if ($_PatPackageManagerRustCargoUpdate == false) {
+        return false
+    }
+    return ((which cargo-install-update | is-not-empty) and (which cargo-install-update-config | is-not-empty))
+}
+
+# Install package using RUST
+def "main install rust" [$package: string] {
+    if ((main status rust) == false) {
+        return false
+    }
+    # Set environment
+    let IsNightly = main status rust nightly
+    if ($_PatPackageManagerRustCache == true) {
+        $env.CARGO_TARGET_DIR = "/tmp/cargo"
+    }
+    if ($IsNightly == true) {
+        $env.RUSTFLAGS = $"-Z threads=($_PatPackageManagerRustThreads)"
+    }
+    if ((main status rust scache) == true) {
+        $env.RUSTC_WRAPPER = (which sccache | first).path
+    }
+    # Install
+    if ($IsNightly == true) {
+        if ((main status rust binstall) == true) {
+            ^cargo +nightly binstall $package
+        } else if ((main status rust quickinstall) == true) {
+            ^cargo +nightly quickinstall $package
+        } else if ((main status rust cargo-update) == true) {
+            ^cargo +nightly install-update -i $package
+        } else {
+            ^cargo +nightly install $package
+        }
+    } else {
+        if ((main status rust binstall) == true) {
+            ^cargo binstall $package
+        } else if ((main status rust quickinstall) == true) {
+            ^cargo quickinstall $package
+        } else if ((main status rust cargo-update) == true) {
+            ^cargo install-update -i $package
+        } else {
+            ^cargo install $package
+        }
+    }
+    return true
+}
+
+# Update package using RUST
+def "main update rust" [$package: string] {
+    if ((main status rust) == false) {
+        return false
+    }
+    # Set environment
+    let IsNightly = main status rust nightly
+    if ($_PatPackageManagerRustCache == true) {
+        $env.CARGO_TARGET_DIR = "/tmp/cargo"
+    }
+    if ($IsNightly == true) {
+        $env.RUSTFLAGS = $"-Z threads=($_PatPackageManagerRustThreads)"
+    }
+    if ((main status rust scache) == true) {
+        $env.RUSTC_WRAPPER = (which sccache | first).path
+    }
+    # Update
+    if ($IsNightly == true) {
+        if ((main status rust cargo-update) == true) {
+            ^cargo +nightly install-update -i $package
+        } else if ((main status rust binstall) == true) {
+            ^cargo +nightly binstall $package
+        } else if ((main status rust quickinstall) == true) {
+            ^cargo +nightly quickinstall $package
+        } else {
+            ^cargo +nightly install $package
+        }
+    } else {
+        if ((main status rust cargo-update) == true) {
+            ^cargo install-update -i $package
+        } else if ((main status rust binstall) == true) {
+            ^cargo binstall $package
+        } else if ((main status rust quickinstall) == true) {
+            ^cargo quickinstall $package
+        } else {
+            ^cargo install $package
+        }
+    }
+    return true
+}
+
+# Uninstall package using RUST
+def "main uninstall rust" [$package: string] {
+    if ((main status rust) == false) {
+        return false
+    }
+    # Set environment
+    let IsNightly = main status rust nightly
+    if ($IsNightly == true) {
+        $env.RUSTFLAGS = $"-Z threads=($_PatPackageManagerRustThreads)"
+    }
+    # Uninstall
+    if ($IsNightly == true) {
+        ^cargo +nightly uninstall $package
+    } else {
+        ^cargo uninstall $package
+    }
+    return true
+}
+
+# Upgrade rust compiler
+def "main upgrade-self rust" [] {
+    if (((main status rust) == false) or (which rustup | is-empty)) {
+        return false
+    }
+    if ((main status rust nightly) == true) {
+        ^rustup update nightly
+    }
+    ^rustup update stable
+    return true
+}
+
+# Upgrade packages using RUST
+def "main upgrade rust" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    # Set environment
+    let IsNightly = main status rust nightly
+    if ($_PatPackageManagerRustCache == true) {
+        $env.CARGO_TARGET_DIR = "/tmp/cargo"
+    }
+    if ($IsNightly == true) {
+        $env.RUSTFLAGS = $"-Z threads=($_PatPackageManagerRustThreads)"
+    }
+    if ((main status rust scache) == true) {
+        $env.RUSTC_WRAPPER = (which sccache | first).path
+    }
+    # Update
+    ## Update using cargo-update (short circuit)
+    if ((main status rust cargo-update) == true) {
+        if ($IsNightly == true) {
+            ^cargo +nightly install-update -a
+        } else {
+            ^cargo install-update -a
+        }
+        return true
+    }
+    ## Update using magic
+    let packages = (
+        open ~/.cargo/.crates2.json
+            | each { $in.installs } # Get installed packages
+            | columns # Get names of packages in format "pkg ver (url)"
+            | each { $in | split row " " | first } # Get only name of package
+    )
+    if ($IsNightly == true) {
+        if ((main status rust binstall) == true) {
+            $packages | each { ^cargo +nightly binstall $in }
+        } else if ((main status rust quickinstall) == true) {
+            $packages | each { ^cargo +nightly quickinstall $in }
+        } else {
+            $packages | each { ^cargo +nightly install $in }
+        }
+    } else {
+        if ((main status rust binstall) == true) {
+            $packages | each { ^cargo binstall $in }
+        } else if ((main status rust quickinstall) == true) {
+            $packages | each { ^cargo quickinstall $in }
+        } else {
+            $packages | each { ^cargo install $in }
+        }
+    }
+    return true
+}
+
+# Update lockfile of RUST in dotfiles
+def "main update-lockfile rust" [] {
+    if ((main status rust) == false) {
+        return false
+    }
+    let base_path = ($"($_PatLockfilesBasePath)rust" | path expand)
+    let json_path = $"($base_path)/.crates2.json"
+    let toml_path = $"($base_path)/.crates.toml"
+    mkdir $base_path
+    print $"Copying cargo lock files..."
+    cp ~/.cargo/.crates2.json $json_path
+    cp ~/.cargo/.crates.toml $toml_path
+    print "Lockfile updated"
+    return true
+}
+
+##### Update all system packages
+
+# Upgrade packages
+def "main upgrade" [] {
+    print "Trying to update all packages in winget"
+    main upgrade winget
+    print "Trying to update all packages in choco"
+    main upgrade choco
+    print "Trying to update all packages in scoop"
+    main upgrade scoop
+    if ((main status nala) and ($_PatPackageManagerPreferNalaOverApt)) {
+        print "Trying to update all packages in nala"
+        main upgrade nala
+    } else {
+        print "Trying to update all packages in apt"
+        main upgrade apt
+    }
+    print "Trying to update all packages in yum"
+    main upgrade yum
+    print "Trying to update all packages in dnf"
+    main upgrade dnf
+    print "Trying to update all packages in pacman"
+    main upgrade pacman
+    print "Trying to update all packages in pacstall"
+    main upgrade pacstall
+    print "Trying to update all packages in apk"
+    main upgrade apk
+    print "Trying to update all packages in flatpak"
+    main upgrade flatpak
+    print "Trying to update all packages in snap"
+    main upgrade snap
+    print "Trying to update all packages in brew"
+    main upgrade brew
+    print "Trying to update all packages in brewcask"
+    main upgrade brewcask
+    print "Trying to update all packages in mas"
+    main upgrade mas
+
+    if ($_PatPackageManagerUpdateAllGlobalPackages) {
+        print "Trying to update all packages in npm"
+        main upgrade npm
+        print "Trying to update all packages in pnpm"
+        main upgrade pnpm
+        print "Trying to update all packages in yarn"
+        main upgrade yarn
+        print "Trying to update all packages in bun"
+        main upgrade bun
+        print "Trying to update all packages in pipx"
+        main upgrade pipx
+        print "Trying to update all packages in rust"
+        main upgrade rust
+    }
+
+    if ($_PatPackageManagerUpdateAllUpdatesLockfile) {
+        main update-lockfile
+    }
+    return true
+}
+
+##### Update all global lockfiles
+
+# Upgrade packages
+def "main update-lockfile" [] {
+    print "Trying to update lockfile of npm"
+    main update-lockfile npm
+    print "Trying to update lockfile of pnpm"
+    main update-lockfile pnpm
+    print "Trying to update lockfile of yarn"
+    main update-lockfile yarn
+    print "Trying to update lockfile of bun"
+    main update-lockfile bun
+    print "Trying to update lockfile of pip"
+    main update-lockfile pip
+    print "Trying to update lockfile of pipx"
+    main update-lockfile pipx
+    print "Trying to update lockfile of go"
+    main update-lockfile go
+    print "Trying to update lockfile of rust"
+    main update-lockfile rust
+    return true
+}
+
+##### Update all global lockfiles
+
+# Clean unused packages
+def "main clean" [] {
+    print "Trying to clean unused packages in flatpak"
+    main clean flatpak
+    print "Trying to clean unused packages in snap"
+    main clean snap
+    print "Trying to clean unused packages in homemanager"
+    main clean homemanager
+    return true
+}
+
+# Deep clean unused packages
+def "main deepclean" [] {
+    main clean
+    print "Trying to deepclean unused packages in homemanager"
+    main deepclean homemanager
+    return true
+}
+
+def main [] {
+    print "Welcome to package manager nushell script"
+}

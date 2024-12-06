@@ -1,0 +1,6 @@
+* Project Make Better Shell Experience
+  - ( ) Find bottlnecks
+  - ( ) Optimize Config
+  - ( ) Optimizations
+  -- ( ) Make Option to run something only in interactive mode (Meaning that if you run some script it will not be called)
+  -- ( ) Remove all requires (. $script in files)

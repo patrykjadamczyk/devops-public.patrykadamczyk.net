@@ -1,0 +1,7 @@
+enable_nightly_info=true
+enable_release_build=false
+# downloads_location=""
+# installation_location=""
+version_sync_file_location="C:\\Users\\patry\\AppData\\Local\\nvim\\nvim_version"
+rollback_limit=3
+# github_mirror=""

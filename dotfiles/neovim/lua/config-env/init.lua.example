@@ -1,0 +1,6 @@
+vim.g.patconfig_nushell = 1
+vim.g.patconfig_powershell = 1
+vim.g.patconfig_mainwindowspc = 1
+vim.g.patconfig_nushell = 0
+vim.g.patconfig_powershell = 0
+vim.g.patconfig_mainwindowspc = 0

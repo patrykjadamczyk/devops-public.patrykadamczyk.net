@@ -1,0 +1,7 @@
+clang 18.1.8
+bun 1.1.13
+deno 1.44.4
+golang 1.22.5
+nodejs 22.4.1
+zig 0.13.0
+dotnet 8.0.7

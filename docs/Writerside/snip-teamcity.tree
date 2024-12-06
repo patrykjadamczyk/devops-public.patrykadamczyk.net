@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/product-profile.dtd">
+
+<instance-profile id="snip-teamcity"
+                  name="Snippets - TeamCity"
+                  start-page="snippets-teamcity.md" is-library="true">
+
+    <toc-element topic="snippets-teamcity.md"/>
+    <toc-element topic="Snippets-TeamCity-MetarunnerDSL-TriggerOtherBuildConfiguration.md"/>
+</instance-profile>

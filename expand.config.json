@@ -1,0 +1,418 @@
+{
+    "sections": [
+        {
+            "title": "PowerShell Profile",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "pwsh",
+                    "location": "%PowerShellConfigDir%/dotfiles"
+                },
+                {
+                    "type": "file",
+                    "file": "pwsh/Profile.ps1",
+                    "location": "%PowerShellConfigDir%/Microsoft.PowerShell_profile.ps1"
+                }
+            ]
+        },
+        {
+            "title": "Nushell Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "nushell",
+                    "location": "%XDG_CONFIG_HOME%/nushell",
+                    "os": ["Linux", "MacOS"]
+                },
+                {
+                    "type": "directory-symlink",
+                    "directory": "nushell",
+                    "location": "%RoamingConfigDir%/nushell",
+                    "os": "Windows"
+                },
+                {
+                    "type": "directory-symlink",
+                    "directory": "nushell",
+                    "location": "%ConfigDir%/nushell"
+                }
+            ]
+        },
+        {
+            "title": "Alacritty Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "Alacritty",
+                    "location": "%RoamingConfigDir%/alacritty"
+                }
+            ]
+        },
+        {
+            "title": "WezTerm Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "wezterm",
+                    "location": "~/.config/wezterm"
+                }
+            ]
+        },
+        {
+            "title": "Starship Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "starship/starship.toml",
+                    "location": "~/.config/starship.toml"
+                }
+            ]
+        },
+        {
+            "title": "Navi Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "navi",
+                    "location": "~/.config/navi"
+                }
+            ]
+        },
+        {
+            "title": "NeoVim Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "neovim",
+                    "location": "%XDG_CONFIG_HOME%/nvim"
+                }
+            ]
+        },
+        {
+            "title": "Lite NeoVim Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "lite-nvim",
+                    "location": "%XDG_CONFIG_HOME%/lite-nvim"
+                }
+            ]
+        },
+        {
+            "title": "Lite Orgmode NeoVim Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "orgmode-nvim",
+                    "location": "%XDG_CONFIG_HOME%/orgmode-nvim"
+                }
+            ]
+        },
+        {
+            "title": "Yazi Terminal File Manager",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "yazi/yazi.windows.toml",
+                    "location": "~/AppData/Roaming/yazi/config/yazi.toml",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/yazi.linux.toml",
+                    "location": "~/.config/yazi/config/yazi.toml",
+                    "os": "Linux"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/yazi.mac.toml",
+                    "location": "~/.config/yazi/config/yazi.toml",
+                    "os": "MacOS"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/yazi.windows.toml",
+                    "location": "~/AppData/Roaming/yazi/config/theme.toml",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/theme.toml",
+                    "location": "~/.config/yazi/config/theme.toml",
+                    "os": [ "Linux", "MacOS" ]
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/yazi.windows.toml",
+                    "location": "~/AppData/Roaming/yazi/theme.toml",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/theme.toml",
+                    "location": "~/.config/yazi/theme.toml",
+                    "os": [ "Linux", "MacOS" ]
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/theme.tmTheme",
+                    "location": "~/.config/yazi/config/theme.tmTheme",
+                    "os": [ "Linux", "MacOS" ]
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/theme.tmTheme",
+                    "location": "~/AppData/Roaming/yazi/config/theme.tmTheme",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/keymap.toml",
+                    "location": "~/AppData/Roaming/yazi/keymap.toml",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/keymap.toml",
+                    "location": "~/.config/yazi/config/keymap.toml",
+                    "os": [ "Linux", "MacOS" ]
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/keymap.toml",
+                    "location": "~/.config/yazi/keymap.toml",
+                    "os": [ "Linux", "MacOS" ]
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/init.lua",
+                    "location": "~/AppData/Roaming/yazi/init.lua",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "yazi/init.lua",
+                    "location": "~/.config/yazi/init.lua",
+                    "os": [ "Linux", "MacOS" ]
+                }
+            ]
+        },
+        {
+            "title": "Editor configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "editor-config/omnisharp.json",
+                    "location": "~/.omnisharp/omnisharp.json"
+                },
+                {
+                    "type": "symlink",
+                    "file": "editor-config/.editorconfig",
+                    "location": "~/.editorconfig"
+                }
+            ]
+        },
+        {
+            "title": "Git",
+            "items": [
+                {
+                    "type": "file",
+                    "file": "git/.gitattributes",
+                    "location": "~/.gitattributes"
+                },
+                {
+                    "type": "file",
+                    "file": "git/.gitignore",
+                    "location": "~/.gitignore"
+                },
+                {
+                    "type": "file",
+                    "file": "git/.gitconfig",
+                    "location": "~/.gitconfig"
+                },
+                {
+                    "type": "symlink",
+                    "file": "git/lazygit_config.yaml",
+                    "location": "~/AppData/Roaming/lazygit/config.yml",
+                    "os": "Windows"
+                },
+                {
+                    "type": "symlink",
+                    "file": "git/lazygit_config.yaml",
+                    "location": "~/.config/lazygit/config.yml",
+                    "os": "Linux"
+                },
+                {
+                    "type": "symlink",
+                    "file": "git/lazygit_config.yaml",
+                    "location": "~/Library/Application Support/lazygit/config.yml",
+                    "os": "MacOS"
+                }
+            ]
+        },
+        {
+            "title": "Zellij Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "zellij/config.kdl",
+                    "location": "~/.config/zellij/config.kdl",
+                    "os": "Linux"
+                },
+                {
+                    "type": "symlink",
+                    "file": "zellij/config.kdl",
+                    "location": "~/Library/Application Support/org.Zellij-Contributors.Zellij/config.kdl",
+                    "os": "MacOS"
+                }
+            ]
+        },
+        {
+            "title": "HTOP Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "htop/htoprc",
+                    "location": "~/.config/htop/htoprc"
+                }
+            ]
+        },
+        {
+            "title": "Nix",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "file": "../nix/home-manager",
+                    "location": "~/.config/home-manager",
+                    "os": "Linux"
+                },
+                {
+                    "type": "directory-symlink",
+                    "file": "../nix/home-manager",
+                    "location": "~/.config/home-manager",
+                    "os": "MacOS"
+                },
+                {
+                    "type": "symlink",
+                    "file": "../nix/nixpkgs_config.nix",
+                    "location": "~/.config/nixpkgs/config.nix"
+                }
+            ]
+        },
+        {
+            "title": "Bob.nvim Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "bob-nvim/config.toml",
+                    "location": "%AppSupportConfigDir%/bob/config.toml",
+                    "os": ["Linux", "MacOS"]
+                },
+                {
+                    "type": "symlink",
+                    "file": "bob-nvim/config.windows.toml",
+                    "location": "%AppSupportConfigDir%/bob/config.toml",
+                    "os": "Windows"
+                }
+            ]
+        },
+        {
+            "title": "WGET configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "wget/.wgetrc",
+                    "location": "~/.wgetrc"
+                }
+            ]
+        },
+        {
+            "title": "Himalaya Email configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "himalaya/config.toml",
+                    "location": "~/.config/himalaya/config.toml"
+                }
+            ]
+        },
+        {
+            "title": "MPV Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "mpv",
+                    "location": "%RoamingConfigDir%/mpv",
+                    "os": "Windows"
+                },
+                {
+                    "type": "directory-symlink",
+                    "directory": "mpv",
+                    "location": "%XDG_CONFIG_HOME%/mpv",
+                    "os": ["Linux", "MacOS"]
+                }
+            ]
+        },
+        {
+            "title": "Vfox",
+            "items": [
+                {
+                    "type": "file",
+                    "file": "vfox/.tool-versions",
+                    "location": "~/.version-fox/.tool-versions"
+                }
+            ]
+        },
+        {
+            "title": "Bottom Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "bottom",
+                    "location": "%RoamingConfigDir%/bottom",
+                    "os": "Windows"
+                },
+                {
+                    "type": "directory-symlink",
+                    "directory": "bottom",
+                    "location": "%XDG_CONFIG_HOME%/bottom",
+                    "os": ["Linux", "MacOS"]
+                }
+            ]
+        },
+        {
+            "title": "Spotify Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "spotify/app.env.toml",
+                    "location": "~/.config/spotify-player/app.toml"
+                },
+                {
+                    "type": "symlink",
+                    "file": "spotify/keymap.toml",
+                    "location": "~/.config/spotify-player/keymap.toml"
+                }
+            ]
+        },
+        {
+            "title": "Just Build Configuration",
+            "items": [
+                {
+                    "type": "directory-symlink",
+                    "directory": "just",
+                    "location": "~/.config/just"
+                }
+            ]
+        },
+        {
+            "title": "Atuin Configuration",
+            "items": [
+                {
+                    "type": "symlink",
+                    "file": "atuin/config.toml",
+                    "location": "~/.config/atuin/config.toml"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+-- -- Prepare stuff to make everything work if folder is provided
+-- -- This is workaround for nvim-tree which acts very crazy when there is no buffers
+-- -- This workaround does not work when you disable git integration in nvim tree because then for some reason argv(0) is
+-- -- NvimTree1 (name of nvimtree buffer) instead of real argv (some folder)
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, {
+--     callback = function(_)
+--         local argc = vim.fn.argc()
+--         if argc == 0 then
+--             return
+--         end
+--         local i = 0
+--         local found = false
+--         while i < argc do
+--             if vim.fn.isdirectory(vim.fn.argv(i)) == 1 then
+--                 found = true
+--             end
+--             i = i + 1
+--         end
+--         if found ~= true then
+--             return
+--         end
+--         -- print("Reloading Nvim Tree and Sidebar")
+--         vim.notify("Reloading Nvim Tree and Sidebar", vim.log.levels.INFO, { title = "Layout" })
+--         -- vim.cmd("NvimTreeClose")
+--         -- vim.cmd("AerialClose")
+--         -- vim.cmd("SidebarNvimClose")
+--         vim.cmd("lua MiniStarter.open()")
+--         vim.cmd("lua vim.o.showtabline = 2")
+--         local start_buf = vim.api.nvim_get_current_buf()
+--         local current_win = vim.api.nvim_get_current_win()
+--         -- vim.cmd("NvimTreeOpen")
+--         -- vim.cmd("SidebarNvimOpen")
+--         -- vim.cmd("AerialOpen")
+--         vim.cmd("lua MiniStarter.refresh(" .. start_buf .. ")")
+--         vim.cmd("lua vim.o.showtabline = 2")
+--         vim.defer_fn(function()
+--             local bf = vim.bo.filetype == "lazy"
+--             local win = vim.api.nvim_get_current_win()
+--             -- vim.cmd("SidebarNvimClose")
+--             -- vim.cmd("SidebarNvimOpen")
+--             vim.api.nvim_set_current_win(current_win)
+--             if bf then
+--                 vim.api.nvim_set_current_win(win)
+--             end
+--         end, 500)
+--     end,
+-- })

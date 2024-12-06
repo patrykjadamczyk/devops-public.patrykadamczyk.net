@@ -1,0 +1,4 @@
+$MODULE_OR_NAMESPACE$ $NAMESPACE$
+
+type $TYPE$
+

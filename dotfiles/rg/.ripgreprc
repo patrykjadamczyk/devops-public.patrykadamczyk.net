@@ -1,0 +1,5 @@
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
+# Ignore git files
+--glob=!.git/*

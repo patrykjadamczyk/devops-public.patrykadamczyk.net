@@ -1,0 +1,16 @@
+-- PatVimKeyMapSet({
+--   'n',
+--   '<Leader>ts',
+--   '<cmd>SidebarNvimToggle<cr>',
+--   {
+--     desc = "Toggle Sidebar"
+--   }
+-- })
+-- PatVimKeyMapSet({
+--   'n',
+--   '<Leader>fs',
+--   '<cmd>SidebarNvimToggle<cr><cmd>SidebarNvimToggle<cr>',
+--   {
+--     desc = "Fix Sidebar"
+--   }
+-- })

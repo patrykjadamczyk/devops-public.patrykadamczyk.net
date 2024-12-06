@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/product-profile.dtd">
+
+<instance-profile id="snip-python"
+                  name="Snippets - Python"
+                  start-page="snippets-python.md" is-library="true">
+
+    <toc-element topic="snippets-python.md"/>
+    <toc-element topic="Snippets-Python-LikeCurrentSongOnSpotify.md"/>
+</instance-profile>

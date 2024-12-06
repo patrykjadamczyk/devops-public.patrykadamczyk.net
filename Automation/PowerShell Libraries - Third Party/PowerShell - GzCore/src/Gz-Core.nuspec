@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Gz-Core</id>
+    <version>0.1.0</version>
+    <authors>Michael Herndon</authors>
+    <owners>Nerdy Mishka</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://gitlab.com/nerdymishka/gainz/tree/master/powershell/Gz-Core</projectUrl>
+    <iconUrl>https://gitlab.com/nerdymishka/NerdMishka/raw/dev/resources/images/logo.png</iconUrl>
+    <description>Gz Core
+
+Module contains common use functions such as</description>
+    <releaseNotes>0.1.0 - initial release</releaseNotes>
+    <copyright>(c) 2019 Nerdy Mishka, Michael Herndon. All rights reserved.</copyright>
+    <tags>Gz Gainz Out-Json ConvertTo-Hashtable Test-OsPlatform Test-UserIsAdministrator PSModule PSIncludes_Function PSFunction_Add-DynamicParameter PSFunction_ConvertTo-Hashtable PSFunction_New-DynamicParameter PSFunction_Out-Json PSFunction_Out-FileNoBom PSFunction_Read-GzModuleSetting PSFunction_Set-XFileMode PSFunction_Set-XFileOwner PSFunction_Test-64Bit PSFunction_Test-OsPlatform PSFunction_Test-UserIsAdministrator PSFunction_Write-GzModuleSetting PSCommand_Add-DynamicParameter PSCommand_ConvertTo-Hashtable PSCommand_New-DynamicParameter PSCommand_Out-Json PSCommand_Out-FileNoBom PSCommand_Read-GzModuleSetting PSCommand_Set-XFileMode PSCommand_Set-XFileOwner PSCommand_Test-64Bit PSCommand_Test-OsPlatform PSCommand_Test-UserIsAdministrator PSCommand_Write-GzModuleSetting</tags>
+  </metadata>
+</package>

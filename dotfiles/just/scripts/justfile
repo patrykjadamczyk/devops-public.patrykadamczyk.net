@@ -1,0 +1,2 @@
+set shell := ["nu", "-c"]
+mod ide

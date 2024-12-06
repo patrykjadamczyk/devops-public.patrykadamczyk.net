@@ -1,0 +1,16 @@
+set shell := ["nu", "-c"]
+mod? env
+
+mod deamon
+mod scripts
+
+# List all tasks
+[no-cd]
+default:
+    just -g --list --list-submodules
+
+# Choose task fro list using fzf
+[no-cd]
+fzf:
+    just -g --choose
+

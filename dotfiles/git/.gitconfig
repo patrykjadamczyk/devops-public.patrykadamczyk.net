@@ -1,0 +1,166 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[core]
+	autocrlf = input
+    pager = delta
+[delta]
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
+    true-color = always
+[interactive]
+    diffFilter = delta --color-only
+[commit]
+	gpgSign = true
+[http]
+	sslVerify = true
+[init]
+	defaultBranch = main
+[cola]
+	theme = flat-dark-blue
+	icontheme = dark
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
+[alias]
+	s = "!git status -b -vv --long $@; echo \"Submodule status:\";  git submodule status --recursive $@"
+	l = log --all --graph --date=relative --pretty=format:'%h %Cgreen%ad%Creset %Cblue%an%Creset%n        %s%n       %C(auto)%d%Creset'
+	ll = log --graph --oneline --decorate --all
+	c = commit -m
+	ca = commit -am
+	camp = !git commit -am $@ && git push
+	cgc = !gitmoji -c $@
+	tail = !pwsh -Command \"g tail $@\"
+	ccc = !pwsh -Command \"g ccc $@\"
+	p = push
+	m = merge
+	b = branch
+	d = diff
+	co = checkout
+	cb = checkout -b
+	cb-empty = checkout --orphan
+	co-back = checkout -
+	cp = cherry-pick
+	pl = pull
+	ls = ls-tree --full-name --name-only -r HEAD
+	chmod = update-index --chmod
+	compare = !git diff --stat --color $1..HEAD
+	datelog = log --pretty=format:'%h %ad%x09%an%x09%s' --date=short
+	discard = !git checkout -- . && git clean -fd $@
+	history = log -p
+	optimize = !git repack -ad && sleep 5 && git gc $@
+	remote-delete = push origin --delete
+	rebuild = !git commit --allow-empty -m \"trigger rebuild\" && git push $@
+	rename = branch -m
+	resolve-ours = !git checkout --ours . && git add -u && git commit -m 'resolve conflicts with --ours' $@
+	resolve-theirs = !git checkout --theirs . && git add -u && git commit -m 'resolve conflicts with --theirs' $@
+	rollback = !git revert --no-commit $1..HEAD
+	shallow-clone = clone --depth 1
+	upstream = !pwsh -Command \"g upstream $@\"
+	age = !pwsh -Command \"g age $@\"
+	loc = !tokei $@
+	stats = !onefetch $@
+	ap = add --patch
+	au = add --update
+	ba = branch -a
+	bl = blame -b -w
+	c-am = commit --amend
+	cfg = config
+	cfg-list = config --list
+	gcfg = config --global
+	co-d = !pwsh -Command \"g co-d $@\"
+	co-main = checkout main
+	co-master = checkout master
+	co-dev = checkout dev
+	co-develop = checkout develop
+	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
+	cs = commit -S
+	f = fetch
+	fa = fetch --all --prune
+	push-force = !pwsh -Command \"g push-force $@\"
+	push-forcelease = !pwsh -Command \"g push-forcelease $@\"
+	brsup = !pwsh -Command \"g brsup $@\"
+	pssup = !pwsh -Command \"g pssup $@\"
+	poat = !git push origin --all && git push origin --tags
+	pristine = !git reset --hard && git clean -dfx
+	rem-add = remote add -f
+	rem-del = remote rm
+	rem-get = remote get-url
+	rem-oget = remote get-url origin
+	rem-rename = remote rename
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase -i
+	rbs = rebase --skip
+	rs = restore
+	sub-init = submodule init
+	sub-update = submodule update
+	sub-remove = submodule deinit
+	sub-add = submodule add
+	sub-sync = submodule sync
+	sub-status = submodule status
+	st-save = stash save
+	st-apply = stash apply
+	st-list = stash list
+	st-show = stash show
+	st-clear = stash clear
+	st-drop = stash drop
+	st-pop = stash pop
+	tg = tag
+	tgs = tag -s
+	wa = worktree add
+	wap = !pwsh -Command \"g wap $@\"
+	wab = !pwsh -Command \"g wab $@\"
+	wl = worktree list
+	w-prune = worktree prune
+	wrm = worktree remove
+	wrepair = worktree repair
+	wmv = worktree move
+	start-feature = !pwsh -Command \"g start-feature $@\"
+	start-feature-wt = !pwsh -Command \"g start-feature-wt $@\"
+	swbr-ui = !pwsh -Command \"g swbr-ui $@\"
+	open-url = !pwsh -Command \"g open-url $@\"
+	st-add = !pwsh -Command \"g st-add $@\"
+	st-pull = !pwsh -Command \"g st-pull $@\"
+	st-push = !pwsh -Command \"g st-push $@\"
+	setup = !pwsh -Command \"g setup $@\"
+	show-tree = log --all --graph --decorate --oneline --simplify-by-decoration
+	touch = !pwsh -Command \"g touch $@\"
+	local-commits = !pwsh -Command \"g local-commits $@\"
+	lock = !pwsh -Command \"g lock $@\"
+	unlock = !pwsh -Command \"g unlock $@\"
+	locked = !pwsh -Command \"g locked $@\"
+	root = rev-parse --show-toplevel
+	relative-root = !pwsh -Command \"g relative-root $@\"
+	init-default-branch = config --get init.defaultBranch
+	default-branch = !pwsh -Command \"g default-branch $@\"
+	delta = !pwsh -Command \"g delta $@\"
+	abort = !pwsh -Command \"g abort $@\"
+	get = !pwsh -Command \"g get $@\"
+	submodule-sync-branch = submodule foreach '\n             submodule=$(git --work-tree  rev-parse --show-prefix)\n             submodule=${submodule::-1}\n             branch=$(git -C $toplevel config -f .gitmodules submodule.$submodule.branch)\n             git checkout $branch\n            '
+	run-hook = hook run
+	obliterate-file = !pwsh -Command \"g obliterate-file $@\"
+	obliterate-file-range = !pwsh -Command \"g obliterate-file-range $@\"
+	sync = !git fetch && git pull --recurse-submodules && git push
+	is-worktree = !pwsh -Command \"g is-worktree $@\"
+	info = !pwsh -Command \"g info $@\"
+	info-config = !pwsh -Command \"g info-config $@\"
+	save = stash push --include-untracked
+	update-to-default = !pwsh -Command \"g update-to-default $@\"
+	np = -P
+	see-file = !pwsh -Command \"g see-file $@\"
+	a = add
+	cheatsheet = !glow ~/go/src/devops.patrykadamczyk.net/dotfiles/pwsh/packages/autocomplete/cheatsheets/pwsh/packages/git.md
+	force-push = push --force-with-lease --force-if-includes
+	wip = commit --message 'wip [skip ci]' --no-verify
+	uncommit = reset --soft \"HEAD~1\"
+	unamend = reset --soft \"HEAD@{1}\"
+[push]
+	recurseSubmodules = on-demand

@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: '3'
+
+tasks:
+    watch-neorg:
+        desc: "Watch Neorg"
+        watch: true
+        method: timestamp
+        dir: "~/.config/neorg"
+        sources:
+            - "**/*.*"
+        generates:
+            - ".git/*.*"
+        cmds:
+            - git add -A
+            - cmd: git commit -am "Git Automatic Synchronisation"
+              ignore_error: true
+            - git push
+    watch-vsnip:
+        desc: "Watch Neorg"
+        watch: true
+        method: timestamp
+        dir: "~/.vsnip"
+        sources:
+            - "**/*.*"
+        generates:
+            - ".git/*.*"
+        cmds:
+            - git add -A
+            - cmd: git commit -am "Git Automatic Synchronisation"
+              ignore_error: true
+            - git push
+    default:
+        desc: "Start deamon"
+        cmds:
+            - task watch-neorg watch-vsnip
+    attach-tmux:
+        desc: "Attach to tmux session with deamon"
+        cmds:
+            - tmux attach -t GitAutoSync
+    tmux:
+        desc: "Start deamon in tmux"
+        cmds:
+            - tmux new -s "GitAutoSync" task

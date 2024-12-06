@@ -1,0 +1,362 @@
+* List of order
+** ui_theme - 3000
+   @code lua
+    -- ===== UI Theme =====
+    -- Material Monokai Color Scheme for Vim
+    'skielbasa/vim-material-monokai'
+    -- Catpuccin Theme
+    "catppuccin/nvim"
+   @end
+** statusline - 2000
+   @code lua
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "folke/noice.nvim",
+      "mfussenegger/nvim-dap",
+      "nvim-tree/nvim-tree.lua",
+      "https://gitlab.com/code-stats/code-stats-vim.git",
+      "stevearc/aerial.nvim",
+      "tpope/vim-fugitive",
+      "junegunn/fzf.vim",
+      "rcarriga/nvim-dap-ui",
+      "akinsho/toggleterm.nvim",
+      "folke/trouble.nvim",
+      "stevearc/overseer.nvim",
+    },
+   @end
+** fuzzyfinder - 2990
+   @code lua
+   -- ===== Fuzzy Search File =====
+   {'junegunn/fzf', dir = '~/.fzf', build = './install --all'},
+   'junegunn/fzf.vim',
+   @end
+** autocomplete
+*** Codeium - 2980
+*** Nvim_CMP - 2970
+*** Code
+    @code lua
+    -- Codium Code Completion
+    "Exafunction/codeium.nvim"
+    -- ===== Autocompletion Engine =====
+    -- NeoVim Completion Engine
+    'hrsh7th/nvim-cmp'
+    -- LSP Source for nvim-cmp
+    'hrsh7th/cmp-nvim-lsp'
+    -- Buffer Source for nvim-cmp
+    'hrsh7th/cmp-buffer'
+    -- Paths Source for nvim-cmp
+    'FelipeLema/cmp-async-path'
+    -- Lua Source for nvim-cmp
+    'hrsh7th/cmp-nvim-lua'
+    -- VSnip -> VSCode Snippet Syntax for Snippets in Vim
+    'hrsh7th/vim-vsnip'
+    'hrsh7th/cmp-vsnip'
+    -- Snippets
+    'rafamadriz/friendly-snippets'
+    -- Spell Check for nvim-cmp
+    'f3fora/cmp-spell'
+    -- Cmdline Source for nvim-cmp
+    'hrsh7th/cmp-cmdline'
+    -- Fonts Source for nvim-cmp
+    'amarakon/nvim-cmp-fonts'
+    @end
+** fileexplorer - 2960
+   @code lua
+   'nvim-tree/nvim-tree.lua'
+   @end
+** git
+*** Fugitive - 2950
+*** Git - 2940
+*** Gitsigns - 2930
+*** Neogit - 2830
+*** Code
+   @code lua
+   'tpope/vim-fugitive'
+   'junegunn/gv.vim'
+   'lewis6991/gitsigns.nvim'
+   -- NeoGit
+   "NeogitOrg/neogit"
+   dependencies = {
+       "nvim-lua/plenary.nvim",
+       "nvim-telescope/telescope.nvim",
+       "sindrets/diffview.nvim",
+   }
+   @end
+** notifications - 2920
+   @code lua
+   'rcarriga/nvim-notify'
+   @end
+** lsp
+*** LSPConfig - 2910
+*** Mason - 2900
+*** LSP UI - 2890
+    - Fidget
+    - Lspsaga
+    - Lsplens
+    - etc
+*** LSP Extension - 2880
+    - Neodev
+*** Lint - 2870
+*** Format - 2860
+*** Code
+   @code lua
+   -- Configs for the Nvim LSP client
+   'neovim/nvim-lspconfig',
+   -- Portable package manager for Neovim that runs everywhere Neovim runs.
+   {"williamboman/mason.nvim", build = ":MasonUpdate" },
+   -- mason-lspconfig bridges mason.nvim with the lspconfig plugin
+   'williamboman/mason-lspconfig.nvim',
+   -- Standalone UI for nvim-lsp progress. Eye candy for the impatient.
+   'j-hui/fidget.nvim',
+   -- Additional lua configuration, makes nvim stuff amazing!
+   'folke/neodev.nvim',
+   -- LSP Actions
+   "glepnir/lspsaga.nvim",
+   -- LSP Lens
+   "VidocqH/lsp-lens.nvim",
+   cond = function()
+       return false
+   end,
+   -- Linters
+   -- "mfussenegger/nvim-lint",
+   "patrykjadamczyk/nvim-lint",
+   -- Formatters
+   "stevearc/conform.nvim",
+   @end
+** telescope
+*** Telescope - 2850
+*** Telescope Extensions - 2840
+*** Telescope Utils - 2830
+    - flow.nvim etc
+*** Code
+   @code lua
+   -- ===== Telescope =====
+   -- All the lua functions I don't want to write twice.
+   'nvim-lua/plenary.nvim',
+   -- telescope.nvim is a highly extendable fuzzy finder over lists.
+   'nvim-telescope/telescope.nvim',
+   -- A tab switcher extension for Telescope with information about each tab's working directory.
+   'TC72/telescope-tele-tabby.nvim',
+   -- An extension for telescope.nvim that allows you to search emojis
+   'xiyaowong/telescope-emoji.nvim',
+   -- An extension for telescope.nvim that allows you to search font glyphs
+   'ghassan0/telescope-glyph.nvim',
+   -- -- MUST HAVE PLUGIN FOR NEOVIM --
+   'sudormrfbin/cheatsheet.nvim',
+   -- telescope-command-palette.nvim is a neovim plugin written entirely in lua that will help you to access your custom commands/function/key-bindings.
+   'patrykjadamczyk/telescope-command-palette.nvim',
+   -- Watch environment variables with telescope
+   'LinArcX/telescope-env.nvim',
+   -- A lightweight neovim plugin to quickly run a snippet of code (in the context of the current file you’re editing) without ever leaving neovim
+   'arjunmahishi/flow.nvim',
+   -- A lua fork of vim-devicons. This plugin provides the same icons as well as colors for each icon.
+   'nvim-tree/nvim-web-devicons',
+   -- telescope-file-browser.nvim is a file browser extension for telescope.nvim.
+   'nvim-telescope/telescope-file-browser.nvim',
+   -- Find all pickers available (includes builtins and extensions)
+   'keyvchan/telescope-find-pickers.nvim',
+   -- Disable/Enable LSP clients for buffers.
+   'adoyle-h/lsp-toggle.nvim',
+   -- Visualize your undo tree and fuzzy-search changes in it. For those days where committing early and often doesn't work out.
+   'debugloop/telescope-undo.nvim',
+   -- Telescope DAP (Debug Adapter Protocol)
+   'nvim-telescope/telescope-dap.nvim',
+   @end
+** treesitter - 2820
+   @code lua
+   -- ===== Treesitter =====
+   "nvim-treesitter/nvim-treesitter",
+   dependencies = {
+       'nvim-treesitter/nvim-treesitter-context',
+       'nvim-treesitter/nvim-treesitter-textobjects',
+       {
+           'JoosepAlviste/nvim-ts-context-commentstring',
+           opts = {},
+       },
+       "windwp/nvim-ts-autotag",
+   },
+   @end
+** debugger
+*** Debugger - DAP - 2810
+*** Debugger - DAP - Extensions - 2800
+*** Debugger - DAP - Language Extensions - 2790
+*** Code
+   @code lua
+   -- ===== Debugger =====
+   -- nvim-dap is a Debug Adapter Protocol client implementation for Neovim
+   'mfussenegger/nvim-dap',
+   -- A UI for nvim-dap which provides a good out of the box configuration.
+   'rcarriga/nvim-dap-ui',
+   -- virtual text for the debugger
+   "theHamsta/nvim-dap-virtual-text",
+   -- mason-nvim-dap.nvim closes some gaps that exist between mason.nvim and nvim-dap
+   'jay-babu/mason-nvim-dap.nvim',
+   -- NeoVim Lua
+   "jbyuki/one-small-step-for-vimkind",
+   -- Golang
+   "leoluz/nvim-dap-go",
+   @end
+** ui - 2780 - 2730
+   @code lua
+   -- WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible key bindings of the command you started typing.
+   --   'folke/which-key.nvim',
+   -- A pretty list for showing diagnostics, references, telescope results, quickfix and location lists to help you solve all the trouble your code is causing.
+   'folke/trouble.nvim',
+   -- A snazzy bufferline for Neovim
+   'akinsho/bufferline.nvim',
+   dependencies = 'nvim-tree/nvim-web-devicons',
+   -- Multiple cursors plugin for vim/neovim
+   'mg979/vim-visual-multi',
+   -- Neovim plugin to improve the default vim.ui interfaces
+   'stevearc/dressing.nvim',
+   -- Better UI
+   'MunifTanjim/nui.nvim',
+   -- Better UI for stuff
+   'folke/noice.nvim',
+   -- Dashboard
+   'goolord/alpha-nvim',
+   -- A neovim lua plugin to help easily manage multiple terminal windows
+   'akinsho/toggleterm.nvim',
+   -- Peek when entering :line_nr
+   "nacro90/numb.nvim",
+   -- Annotations at the end of functions
+   "code-biscuits/nvim-biscuits",
+   -- Scrollbar
+   "petertriho/nvim-scrollbar",
+   -- A code outline window for skimming and quick navigation
+   "stevearc/aerial.nvim",
+   -- Highlight arguments' definitions and usages, using Treesitter
+   "m-demare/hlargs.nvim",
+   -- Sidebar
+   "sidebar-nvim/sidebar.nvim",
+   -- Transparent background on demand
+   "xiyaowong/transparent.nvim",
+   -- Highlight chunk under cursor
+   "shellRaining/hlchunk.nvim",
+   @end
+** code - 2730 - 2680
+   @code lua
+   -- Secure load local config files for neovim (CurrentDir/.vimrc)
+   'klen/nvim-config-local',
+   -- markdown preview plugin for (neo)vim
+   'iamcco/markdown-preview.nvim',
+   -- Todo Comments
+   'folke/todo-comments.nvim',
+   -- Schemastore
+   "b0o/schemastore.nvim",
+   -- Project management
+   "ahmedkhalf/project.nvim",
+   -- A better annotation generator. Supports multiple languages and annotation conventions.
+   "danymat/neogen",
+   dependencies = "nvim-treesitter/nvim-treesitter",
+   -- Code::Stats Plugin
+   'https://gitlab.com/code-stats/code-stats-vim.git',
+   -- Todo Comments
+   "folke/todo-comments.nvim",
+   -- Search Plugin for Manual and stuff
+   "lalitmee/browse.nvim",
+   require("browse").setup({
+   -- Debugging in NeoVim the print() way.
+   "andrewferrier/debugprint.nvim",
+   -- NeoConf
+   "folke/neoconf.nvim",
+   -- Package Information (YARN/NPM)
+   "vuki656/package-info.nvim",
+   -- Scratch files
+   "Sonicfury/scretch.nvim",
+   -- Database Editor
+   "tpope/vim-dadbod",
+   "kristijanhusak/vim-dadbod-ui",
+   "kristijanhusak/vim-dadbod-completion",
+   dependencies = {
+       "tpope/vim-dadbod",
+   },
+   -- Task Runner
+   'stevearc/overseer.nvim',
+   -- AutoPair
+   'windwp/nvim-autopairs',
+   -- Better folds
+   'kevinhwang91/nvim-ufo',
+   dependencies = {
+       'kevinhwang91/promise-async',
+   },
+   -- Colors for CSS etc
+   'NvChad/nvim-colorizer.lua',
+   -- Move code blocks
+   'fedepujol/move.nvim',
+   @end
+** other 2670 - 2660
+   @code lua
+   -- ===== Other =====
+   "equalsraf/neovim-gui-shim",
+   -- Discord
+   "andweeb/presence.nvim",
+   @end
+** syntax_highlight 2600 - 2500
+   @code lua
+   -- ===== Syntax Highlighting =====
+   -- 'sheerun/vim-polyglot',
+   -- Special Language Support
+   'alaviss/nim.nvim',
+   -- 'cheap-glitch/vim-v',
+   'chrisbra/csv.vim',
+   'mtdl9/vim-log-highlighting',
+   -- Hurl Syntax
+   'samueljoli/hurl.nvim',
+   -- F# Syntax
+   'adelarsq/neofsharp.vim',
+   @end
+** neorg - 2490
+   @code lua
+   -- Neorg
+   "nvim-neorg/neorg",
+   dependencies = {
+       { "nvim-lua/plenary.nvim" },
+       { "nvim-neorg/neorg-telescope" },
+   },
+   @end
+** utility_plugins
+   @code lua
+   -- ===== Vim =====
+   -- This is a simple plugin that helps to end certain structures automatically
+   'tpope/vim-endwise',
+   @end
+   @code lua
+   -- Vim sugar for the UNIX shell commands that need it the most.
+   -- 'tpope/vim-eunuch',
+   -- Convenience file operations for neovim, written in lua.
+   "chrisgrieser/nvim-genghis",
+   dependencies = "stevearc/dressing.nvim",
+   -- Granular project configuration
+   'tpope/vim-projectionist',
+   -- enable repeating supported plugin maps with "."
+   'tpope/vim-repeat',
+   -- Delete/change/add parentheses/quotes/XML-tags/much more with ease
+   'tpope/vim-surround',
+   -- Better Comments (having option to use tresitter and stuff)
+   'numToStr/Comment.nvim',
+   dependencies = {
+       "nvim-treesitter/nvim-treesitter",
+   },
+   -- Emoji in Vim
+   'junegunn/vim-emoji',
+   -- Adds file type icons to Vim plugins
+   'ryanoasis/vim-devicons',
+   -- use CTRL-A/CTRL-X to increment dates, times, and more
+   'tpope/vim-speeddating',
+   -- ===== Other =====
+   -- This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
+   'tpope/vim-sleuth',
+   -- Harpoon
+   "ThePrimeagen/harpoon",
+   @end
+** my_full_plugins
+   @code lua
+   -- 'patrykjadamczyk/SnipSpark.nvim',
+   dir = "~/go/src/apps.patrykadamczyk.net/SnipSpark.nvim",
+   dependencies = {
+       { 'nvim-lua/plenary.nvim' },
+       { 'nvim-telescope/telescope.nvim' },
+       { 'hrsh7th/nvim-cmp' },
+   },
+   @end

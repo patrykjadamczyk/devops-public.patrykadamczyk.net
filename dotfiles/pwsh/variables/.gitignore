@@ -1,0 +1,4 @@
+# Ignore Environment Specific Variables
+*.env.ps1
+# Ignore Secret Variables
+*.secret.ps1

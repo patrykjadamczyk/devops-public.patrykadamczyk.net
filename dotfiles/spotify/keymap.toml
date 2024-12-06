@@ -1,0 +1,8 @@
+[[actions]]
+action="ToggleLiked"
+key_sequence="C-L"
+
+[[actions]]
+action="AddToLiked"
+key_sequence="C-l"
+

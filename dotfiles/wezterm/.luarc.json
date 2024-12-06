@@ -1,0 +1,20 @@
+{
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+    "workspace.library": [
+        "/home/patryk/go/src/github.com/justinsgithub/wezterm-types/types"
+    ],
+    "Lua.workspace.library": [
+        "/home/patryk/go/src/github.com/justinsgithub/wezterm-types/types"
+    ],
+    "diagnostics.disable": [
+        "different-requires",
+        "missing-fields"
+    ],
+    "hint.enable": true,
+    "runtime.version": "Lua 5.1",
+    "completion.autoRequire": true,
+    "completion.callSnippet": "Replace",
+    "completion.displayContext": 8,
+    "workspace.checkThirdParty": false,
+    "workspace.maxPreload": 1000
+}

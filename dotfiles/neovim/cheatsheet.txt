@@ -1,0 +1,519 @@
+## PAT-NVIM @patnvim
+# Open cheatsheet | <leader>?
+Modes: Normal = NM, Insert = IM, Visual = VM, Command = CM, Search = SM, Not insert mode = NIM | :lua print("Normal = NM, Insert = IM, Visual = VM, Command = CM, Search = SM, Not insert mode = NIM")
+Move visual g/\ | gk
+Move visual g\/ | gj
+Rot13 | g??
+Move on screen: top | H
+Move on screen: middle | M
+Move on screen: bottom | L
+Move on words: left (Shift to ignore punctuation) | b
+Move on words: right (Shift to ignore punctuation) | w
+Move on words: left end (gE to ignore punctuation) | ge
+Move on words: right end (Shift to ignore punctuation) | e
+Motions: brackets | %
+Motions: begginning of line | 0
+Motions: begginning of line (not being space) | ^
+Motions: end of line | $
+Motions: end of line (not being space) | g_
+Motions: begginning of file | gg
+Motions: end of file | G
+Motions: first non space character in line | _
+Go to line number V1 | {n}gg
+Go to line number V2 | {n}G
+Go to line number V3 | :{n}
+Go to: local definition | gd
+Go to: global definition | gD
+Go to: next {c} character | f{c}
+Go to: previous {c} character | F{c}
+Repeat last motion (Note: It's quite limited) | ;
+Repeat last motion backwards | ,
+Go to: next paragraph | }
+Go to: previous paragraph | {
+Center cursor on the screen | zz
+Go to: file under cursor | gf
+Go to: file and line under cursor | gF
+Go to: url under cursor | gx
+Move: Half screen up (no cursor position change) | <C-y>
+Move: Half screen down (no cursor position change) | <C-e>
+Move: Screen up | <C-b>
+Move: Screen down | <C-f>
+Move: Half screen up | <C-u>
+Move: Half screen down | <C-d>
+Enter IM: before cursor (you can use motion before that) | i
+Enter IM: after cursor (you can use motion before that) | a
+Enter IM: at start of line | I
+Enter IM: at end of line | A
+Enter IM: on new line below current | o
+Enter IM: on new line above current | O
+IM: delete character before cursor | <C-h>
+IM: delete word before cursor | <C-w>
+IM: new line | <C-j>
+#IM: indent right | <C-t> (Terminal instead)
+#IM: indent left | <C-d>
+IM: Next autocomplete | <C-n>
+IM: Previous autocomplete | <C-p>
+IM: Paste register {r} | <C-r>{r}
+IM: Single Command {cmd} for insert mode | <C-o>{cmd}
+Exit Mode | <Esc>
+Commands: Replace character to {c} | r{c}
+Commands: Replace mode | R
+Commands: Join 2 lines | J
+Commands: Join 2 lines without space | gJ
+Commands: Reflow paragraph | gwip
+Case: Toggle case {motion} (for word full word change case) | g~{motion}
+Case: Toggle case {motion} (for word only first letter change case) | ~{motion}
+Case: Lowercase {motion} | gu{motion}
+Case: Uppercase {motion} | gU{motion}
+Change: Change {motion} | c{motion}
+Change: Change line | cc
+Change: Change from cursor to end of line | C
+Change: Change character under cursor | s
+Change: Change line | S
+Undo: Undo | u
+Undo: Undo all changes on line | U
+Undo: Redo | <C-r>
+Repeat last command | .
+Enter VM: Visual Mode | v
+Enter VM: Visual Mode with {motion} | v{motion}
+Enter VM: Visual Line Mode | V
+Enter VM: Visual Block Mode | <C-v>
+VM: Jump to second end of selection (selection) | o
+VM: Jump to second end of selection (block) | O
+VM: Select word | aw
+VM: Select block () | ab
+VM: Select block {} | aB
+VM: Select block <> | at
+VM: Select block () with content | ib
+VM: Select block {} with content | iB
+VM: Select block <> with content | it
+VM: Select block () | a(
+VM: Select block {} | a{
+VM: Select block () with content | i(
+VM: Select block {} with content | i{
+VM: Indent block | >
+VM: Unindent block | <
+VM: Copy | y
+VM: Delete | d
+VM: Change case | ~
+VM: Lowercase | u
+VM: Uppercase | U
+Registers: Check registers | :reg
+Registers: Yank to register {r} | {r}y
+Registers: Paste from register {r} | {r}p
+Register List: Last copied text | "0
+Register List: Last copied text or deleted | ""
+Register List: Name of the file | "%
+Register List: Name of last file | "#
+Register List: Clipboard (X11 Primary) | "*
+Register List: Clipboard (X11 Clipboard) | "+
+Register List: Last searched text | "/
+Register List: Last command | ":
+Register List: Last typed text | ",
+Register List: Last less than line delete | "-
+Register List: Last expression | "=
+Register List: Black hole (/dev/null like) | "_
+Marks: See all marks | :marks
+Marks: Set {mark} | m{mark}
+Marks: Go to {mark} | `{mark}
+Marks: Copy from current position to {mark} | y`{mark}
+Jumps: Seel all jumps | :jumps
+Jumps: Go to next | <C-i>
+Jumps: Go to previous | <C-o>
+Changes: See all changes | :changes
+Changes: Go to next | g,
+Changes: Go to previous | g;
+Changes: Go to tag under cursor | <C-]>
+Copy: Copy line | yy
+Copy: Copy selection | y
+Paste: Text (pastes once, next p don't do anything) | p
+Paste: Text before cursor (pastes multiple times) | P
+Paste: Text and move cursor after pasted text | gp
+Paste: Text before cursor and move cursor after pasted text | gP
+Paste: Text with indentation | ]p
+Delete: Delete line | dd
+Delete: Delete selection | d
+Delete: Delete character under cursor | x
+Delete: Delete character left of the cursor (dl) | X
+Delete: Delete to end of the line (d$) | D
+Change: Change to end of the line (c$) | C
+Change: Change character under cursor (cl) | s
+Change: Change a whole line (cc) | S
+Indent: Indent line | >>
+Indent: Unindent line | <<
+Indent: Indent block | >%
+Indent: Indent block () | >ib
+Indent: Indent block <> | >at
+Indent: Reindent line | ==
+Indent: Reindent block | =%
+Indent: Reindent file | gg=G
+Commands: Save file | :w
+Commands: Save file as root | :w !sudo tee %
+Commands: Save and quit | :wq
+Commands: Quit | :q
+Commands: Quit and ignore changes | :q!
+Commands: Save all files and quit | :wqa
+Search: Search {pattern} forward | /{pattern}
+Search: Search {pattern} backward | ?{pattern}
+Search: Search {pattern} as Regular Expression | \v{pattern}
+SM: Next Result | n
+SM: Previous Result | N
+Search and Replace: Search and replace {pattern} with {replace} | :%s/{pattern}/{replace}/g
+Search and Replace: Search and replace {pattern} with {replace} with confirmation | :%s/{pattern}/{replace}/gc
+SM: Turn off search highlight | :nohl
+Search through Files: Search {pattern} | :vimgrep /{pattern}/ {files}
+Search through Files: Go to next match | :cn
+Search through Files: Go to previous match | :cp
+Search through Files: Open result list | :copen
+Search through Files: Close result list | :cclose
+Tabs: New tab | :tabnew
+Tabs: Close tab | :tabclose
+Tabs: Move current split to new tab | <C-w>T
+Tabs: Next tab | gt
+Tabs: Previous tab | gT
+Tabs: Go to tab {number} | {number}gt
+Tabs: Move current tab to {number} | :tabmove {number}
+Tabs: Close all except current | :tabonly
+Tabs: Do {command} in all tabs | :tabdo {command}
+Commands: Open {file} | :e {file}
+Buffers: Next Buffer | :bn
+Buffers: Previous Buffer | :bp
+Buffers: Close Buffer | :bd
+Buffers: Go to buffer {number} | :b{number}
+Buffers: List all buffers | :ls
+Buffers: List all buffers | :buffers
+Splits: Split horizontally (you can add file) | :split
+Splits: Split vertically (you can add file)| :vsplit
+Splits: Open all buffers in vertical split | :vert {command}
+Tabs: Open all buffers in new tabs | :tab ba
+Split: Split current split | <C-w>s
+Split: Split current split vertically | <C-w>v
+Split: Go to next split | <C-w>w
+Split: Close current split | <C-w>q
+Split: Go to split with {movement} | <C-w>{movement}
+Folds: Define fold and fold | zf
+Folds: Delete fold | zd
+Folds: Toggle fold | za
+Folds: Open fold | zo
+Folds: Close fold | zc
+Folds: Close all folds by one level | zm
+Folds: Toggle function of folds | zi
+# Diff: Next Change | ]c
+# Diff: Previous Change | [c
+Diff: Next Change | ]g
+Diff: Previous Change | [g
+Diff: Open difference in new window | do
+Diff: Open difference in new split | dp
+Diff: Open current file in diff mode | :diffthis
+Diff: Update differences in current file | :dif
+Diff: Turn off diff mode | :diffoff
+Digraphs: Insert digraph {char1}{char2} | <C-k>{char1}{char2}
+Neovim: Healthcheck | :checkhealth
+Neovim: Lua {command} | :lua {command}
+Search: Remove all lines with {pattern} | g/{pattern}/d
+Keymaps: Show what {key} does in {mode} | :echo maparg("{key}", "{mode}")
+Plugins: GitSigns: Open diff for {spec} | :Gitsigns diffthis {spec}
+Special: Change all 1.jpg to {number}.jpg | :let idx=1 | g/1.jpg/ let idx += 1 | s//\= idx . '.jpg'/
+Keymap: Leader - Default: \ | <leader>
+Plugins: Markdown: Preview | :MarkdownPreview
+Plugins: Search: Open search | :BrowseInputSearch
+Plugins: Search: Open search in DevDocs | :BrowseDevdocsSearch
+Plugins: Search: Open search in DevDocs for current filetype | :BrowseDevdocsFiletypeSearch
+Plugins: Search: Open search in MDN | :BrowseMdnSearch
+Plugins: Debug Print: Add DP after current line | g?p
+Plugins: Debug Print: Add DP before current line | g?P
+Plugins: Debug Print: Add DP with value before current line | g?v
+Plugins: Debug Print: Add DP with value after current line | g?V
+Plugins: Debug Print: Find variable through motion and add DP before current line | g?o
+Plugins: Debug Print: Find variable through motion and add DP before current line with value | g?O
+Plugins: Debug Print: Remove all DP | :DeleteDebugPrints
+Plugins: Aerial: Toggle Symbol Tree | :AerialToggle
+Plugins: Trouble: Toggle Diagnostic Panel | :TroubleToggle
+Plugins: Sidebar: Toggle Sidebar | <leader>ts
+Plugins: Sidebar: Fix Sidebar | <leader>fs
+Plugins: Files: Copy filename | :CopyFilename
+Plugins: Files: Copy path | :CopyFilepath
+Plugins: Files: Chmod +x | :Chmodx
+Plugins: Vim Surround: Change {c1} to {c2} (f.e. cs"') | cs{c1}{c2}
+Plugins: Vim Surround: Change {c1} to tag {c2} | cs{c1}<{c2}>
+Plugins: Vim Surround: Change tag to {c2} | cst{c2}
+Plugins: Vim Surround: Remove surrounding {c1} | ds{c1}
+Plugins: Vim Surround: Open ( arround word | ysiw
+Plugins: Vim Surround: Change [ to { with space | cs]{
+Plugins: Vim Surround: Change [ to { without space | cs]}
+Plugins: Vim Surround: VM: Surround selection with {c} | S{c}
+Plugins: Comments: Toggle comment with {motion} | gc{motion}
+Plugins: Comments: Toggle comment with {motion} using blockwise comment | gc{motion}
+Plugins: Comments: Toggle comment for current line | gcc
+Plugins: Comments: Toggle comment for current line blockwise | gbc
+Plugins: Comments: Toggle comment for {x} lines | {x}gcc
+Plugins: Comments: Toggle comment for {x} lines blockwise | {x}gbc
+Plugins: Comments: VM: Toggle region using linewise comments | gc
+Plugins: Comments: VM: Toggle region using blockwise comments | gb
+Plugins: Speeddating: Increment | <C-A>
+Plugins: Speeddating: Decrement | <C-X>
+Plugins: Speeddating: Set timestamp under cursor to current time | d<C-X>
+Plugins: Speeddating: Set timestamp under cursor to utc time | d<C-A>
+Keymaps: Autocomplete: Documentation up | <A-Up>
+Keymaps: Autocomplete: Documentation down | <A-Down>
+Keymaps: Autocomplete: Force trigger | <C-Space>
+Keymaps: Autocomplete: Force trigger | <C-c>
+Keymaps: Autocomplete: Close autocomplete | <C-e>
+Keymaps: Autocomplete: Autocomplete | <C-y>
+Keymaps: Codium Copilot: Autocomplete | <A-y>
+Keymaps: Window: Go to split through {move} (move=hjkl arrows) | <C-{move}>
+Keymaps: Window Resize: Resize {move} (move=hjkl arrows) | <C-W>{move}
+Keymaps: Tabs: First tab | th
+Keymaps: Tabs: Previous tab | tk
+Keymaps: Tabs: Next tab | tj
+Keymaps: Tabs: Last tab | tl
+Keymaps: Tabs: Close current tab | <leader>td
+Keymaps: Tabs: New tab | <leader>tn
+Keymaps: Tabs: Go to {tab} | {tab}tg
+Keymaps: Telescope: File Browser | <leader>ff
+Keymaps: Telescope: Buffer Browser | <leader>fb
+Keymaps: Telescope: Help Browser | <leader>fh
+Keymaps: Telescope: Notification Browser | <leader>fn
+Keymaps: Telescope: Projects Browser | <leader>fp
+Keymaps: Cheatsheet | <leader>?
+Keymaps: Command Palette | <C-p>
+Keymaps: Telescope: History Browser | <leader>u
+Keymaps: Telescope: Live Grep | <leader>fl
+Keymaps: Telescope Window Keymap: Send to quickfix | <C-q>
+Keymaps: Terminal: Open Terminal | <C-t>
+Keymaps: Terminal: Open Terminal {num} | {num}<C-t>
+Keymaps: Terminal: Open Floating Terminal | <leader>tf
+Keymaps: Terminal: Open Floating Terminal {num} | {num}<leader>tf
+Keymaps: Toggle File Tree | <C-n>
+Keymaps: Visual Multi Cursor: Search regex | <C-d>b
+Keymaps: Visual Multi Cursor: Add word under cursor or next regex result (repeat to add next) | <C-d>d
+Keymaps: Visual Multi Cursor: Add cursor above | <C-S-UpArrow>
+Keymaps: Visual Multi Cursor: Add cursor below | <C-S-DownArrow>
+Keymaps: LSP: Documentaion | K
+Keymaps: LSP: Go to Definition | gd
+Keymaps: LSP: Go to Declaration | gD
+Keymaps: LSP: Show all implementations | gi
+Keymaps: LSP: Show all references | gr
+Keymaps: LSP: Go to definition of type | go
+Keymaps: LSP: Show signature | gs
+Keymaps: LSP: Rename | F2
+Keymaps: LSP: Format | F3
+Keymaps: LSP: Show code actions | F4
+Keymaps: LSP: Show diagnostics for current line | gl
+Keymaps: LSP: Go to previous diagnostic | [d
+Keymaps: LSP: Go to next diagnostic | ]d
+Keymaps: Telescope LSP: Type Definitions | <leader>ltd
+Keymaps: Telescope LSP: Definitions | <leader>ld
+Keymaps: Telescope LSP: Implementations | <leader>li
+Keymaps: Telescope LSP: Workspace Symbols | <leader>lws
+Keymaps: Telescope LSP: Document Symbols | <leader>ldc
+Keymaps: Telescope LSP: Outgoing Calls | <leader>loc
+Keymaps: Telescope LSP: Incoming Calls | <leader>lio
+Keymaps: Telescope LSP: References | <leader>lr
+Keymaps: Telescope: Workspace Symbols | <leader>fs
+Keymaps: LSP Saga: Buffer Diagnostics | <leader>fd
+Keymaps: LSP Saga: Peek Definition | <leader>pd
+Keymaps: LSP Saga: Hover Documentaion | <leader>hd
+Keymaps: DAP: Toggle Breakpoint | <leader>b
+Keymaps: DAP: List Breakpoints | <leader>fb
+Keymaps: DAP: Open Repl | <leader>dr
+Keymaps: DAP: Toggle DAP UI | <leader>du
+Keymaps: Trouble: Show Document Diagnostics | <leader>ttd
+Keymaps: Trouble: Show Workspace Diagnostics | <leader>ttw
+Keymaps: Todo: Show Todos in Telescope | <leader>ft
+Keymaps: LSP: Format | <leader>lf
+Keymaps: Scratch Files: New Named File | <leader>sc
+Keymaps: Scratch Files: Search | <leader>sf
+Keymaps: Neorg: Open current day journal | <leader>nj
+Keymaps: LSP: Toggle Inlay Hints (hints for types etc) | <leader>th
+Keymaps: File Tree: Change root to current CWD | <leader>fr
+Keymaps: Save File | <C-s>
+Keymaps: Stop search highlight | <Esc>
+Cheatsheet: Edit user cheatsheet | :CheatsheetEdit
+Keymaps: Harpoon: Add Mark | <leader>hm
+Keymaps: Harpoon: Toggle Quick Menu | <leader>hq
+Keymaps: Harpoon: Go to {mark} | {mark}<leader>hg
+Keymaps: Harpoon: Go to next mark | <leader>hn
+Keymaps: Harpoon: Go to previous mark | <leader>hp
+Keymaps: Harpoon: Go to {number} terminal | {number}<leader>ht
+Keymaps: Harpoon: Harpoon Marks in Telescope
+Keymaps: Transparent: Toggle | <leader>ttt
+Keymaps: Noice: Dismiss all | <leader>nn
+Move: Half screen down (changed keybind) | <C-i>
+## PAT-TIL @pattil
+# Patryk - Today I Learned or random other things
+Vim: Escape current mode | <C-[>
+Vim: Search for word that is under cursor | *
+Vim: Search for word that is under cursor backwards | #
+Vim: Select inside {c} | vi{c}
+Vim: Select arround word | viw
+# function t(t1: {t1}) function tt(t2: number) => function t(t1: {t1}) function tt(t2: {t1})
+Vim: Get type in ts and paste in other place | ya{ {motions} viw p
+Vim: Select word until whitespace | viW
+Vim: Yank word until whitespace (from end) | yiW
+Vim: Paste over and still remember paste | <leader>p
+Vim: Increment in lines | g<C-a>
+Vim: Change lines to array stuff | vip :s/\(\w.*\)/data[0] = "\1"; f0 3k g<C-a>
+Vim: Jump before opening and closing bracket | %
+Treesitter Motions: Select: Arround Argument | aa
+Treesitter Motions: Select: Inside Argument | ia
+Treesitter Motions: Select: Arround Function | af
+Treesitter Motions: Select: Inside Function | if
+Treesitter Motions: Select: Arround Class | ac
+Treesitter Motions: Select: Inside Class | ic
+Treesitter Motions: Select: Arround If | ai
+Treesitter Motions: Select: Inside If | ii
+Treesitter Motions: Select: Arround Loop | al
+Treesitter Motions: Select: Inside Loop | il
+Treesitter Motions: Select: Arround Comment (Change comment) | at
+Treesitter Motions: Move: Go to next start of function | ]f
+Treesitter Motions: Move: Go to previous start of function | [f
+Treesitter Motions: Move: Go to next start of class | ]c
+Treesitter Motions: Move: Go to previous start of class | [c
+Treesitter Motions: Move: Go to next start of loop | ]l
+Treesitter Motions: Move: Go to previous start of loop | [l
+Treesitter Motions: Move: Go to next end of function | ]F
+Treesitter Motions: Move: Go to previous end of function | [F
+Treesitter Motions: Move: Go to next end of class | ]C
+Treesitter Motions: Move: Go to previous end of class | [C
+Treesitter Motions: Move: Go to next end of loop | ]L
+Treesitter Motions: Move: Go to previous end of loop | [L
+Treesitter: Swap parameters to next | <leader>sp
+Treesitter: Swap parameters to previous | <leader>sP
+Vim: Encrypt/Decrypt File (if you leave passsword empty it decrypts it) [Works only in Vim not NeoVim] | :X
+Keymaps: Start linting | <leader>ll
+Keymaps: Format file or selection using conform | <leader>lF
+Neorg: ToDo: Done | <localleader>td
+Neorg: ToDo: Undone | <localleader>tu
+Neorg: ToDo: Pending | <localleader>tp
+Neorg: ToDo: On Hold | <localleader>th
+Neorg: ToDo: Cancelled | <localleader>tc
+Neorg: ToDo: Recurring | <localleader>tr
+Neorg: ToDo: Important | <localleader>ti
+Neorg: ToDo: Cycle State | <C-Space>
+Neorg: Looking Glass: Edit code block in seperate buffer | <localleader>nc
+Neorg: Pivot: Toggle list type | <localleader>lt
+Neorg: Pivot: Invert list type | <localleader>li
+Neorg: Promo: Increase indent level (and dedent children) | >>
+Neorg: Promo: Decrease indent level (and dedent children) | <<
+Neorg: Promo: Increase indent level | >.
+Neorg: Promo: Decrease indent level | <.
+Neorg: Promo: IM: Increase indent level | <C-t>
+Neorg: Promo: IM: Decrease indent level | <C-d>
+Keymaps: VM: Search and replace all found occurences of selected text (you specify replace text in command) | <leader>rs
+Keymaps: VM: Sort selection | <leader>ss
+Keymaps: VM: Move line up | <S-Up>
+Keymaps: VM: Move line up | <S-k>
+Keymaps: VM: Move line down | <S-down>
+Keymaps: VM: Move line down | <S-j>
+Keymaps: VM: Move line left | <S-left>
+Keymaps: VM: Move line left | <S-h>
+Keymaps: VM: Move line right | <S-right>
+Keymaps: VM: Move line right | <S-l>
+Keymaps: Select line | <leader>vv
+TS-TextObjects: Select Options (v - select, y - yank, c - change, d - delete) | vycd
+TS-TextObjects: Select: Arround argument | aa
+TS-TextObjects: Select: Inside argument | ia
+TS-TextObjects: Select: Arround function | af
+TS-TextObjects: Select: Inside function | if
+TS-TextObjects: Select: Arround class | ac
+TS-TextObjects: Select: Inside class | ic
+TS-TextObjects: Select: Arround if | ai
+TS-TextObjects: Select: Inside if | ii
+TS-TextObjects: Select: Arround loop | al
+TS-TextObjects: Select: Inside loop | il
+TS-TextObjects: Select: Arround comment (there is no inside option sadly) | at
+TS-TextObjects: Move: Go to next start of function | ]f
+TS-TextObjects: Move: Go to previous start of function | [f
+TS-TextObjects: Move: Go to next start of class | ]c
+TS-TextObjects: Move: Go to previous start of class | [c
+TS-TextObjects: Move: Go to next start of loop | ]l
+TS-TextObjects: Move: Go to previous start of loop | [l
+TS-TextObjects: Move: Go to next end of function | ]F
+TS-TextObjects: Move: Go to previous end of function | [F
+TS-TextObjects: Move: Go to next end of class | ]C
+TS-TextObjects: Move: Go to previous end of class | [C
+TS-TextObjects: Move: Go to next end of loop | ]L
+TS-TextObjects: Move: Go to previous end of loop | [L
+TS-TextObjects: Swap: Move parameter to next position | <leader>sp
+TS-TextObjects: Swap: Move parameter to previous position | <leader>sP
+Motion: Make selected line at the top | zt
+Motion: Make selected line at the bottom | zb
+Folds: Fold code based on brace | zf%
+TreeSitter: Incremental Selection: Init Selection | gnn
+TreeSitter: Incremental Selection: Node Incremental | grn
+TreeSitter: Incremental Selection: Scope Incremental | grc
+TreeSitter: Incremental Selection: Node Decremental | grm
+Neogen: Generate documentation comment for current scope (function/class etc) | <leader>cd
+Vim TIL: Search forwards word under cursor | *
+Vim TIL: Search backwards word under cursor | #
+Vim TIL: Search forwards partial word under cursor | g*
+Vim TIL: Search backwards partial word under cursor | g#
+Plugins: Templates: Insert Template | :Template TEMPLATE_NAME VAR_NAME=VAR_VALUE
+Vim TIL: Change $VAR$ into {{_VAR_}} | :%s/\$\(\w\+\)\$/{{\1}}/g
+Insert Mode: Delete word | <C-w>
+Insert Mode: Delete all of line to cursor | <C-u>
+Insert Mode: Insert content of register | <C-r><register>
+Insert Mode: Insert Key | <C-v><KEY>
+Insert Mode: Insert Key (mostly windows) | <C-q><KEY>
+Insert Mode: Insert ASCII Character | <C-v><CHARACTER in form of number 0-255>
+Insert Mode: Insert ASCII Character | <C-v><CHARACTER in form of hex or oct number>
+Insert Mode: Insert UTF Character | <C-v>U<CHARACTER in form of hex or oct number>
+Insert Mode: Normal Mode Command | <C-o><NORMAL MODE COMMAND>
+Vim TIL: Reformat paragraph (operator) | gq
+Vim TIL: Text Format: Center | :<RANGE>center <WIDTH>
+Vim TIL: Text Format: Right | :<RANGE>right <WIDTH>
+Vim TIL: Text Format: Left | :<RANGE>left <margin>
+Vim TIL: Go to middle of current line | gm
+Vim TIL: Insert spaces for tables | :set virtualedit=all
+Vim TIL: Disable virtual edit mode | :set virtualedit=
+Vim TIL: Repeat selection in visual mode | gv
+Vim TIL: Search: Change cursor position based on end of match | /<pattern>e<+/-><nbumber>
+Vim TIL: Search: Change cursor position based on start of match | /<pattern>b<+/-><nbumber>
+Telescope Help inside telescope prompt | <C-/>
+NeoVim TIL: Make syntax highlighted code in HTML format from current buffer | :TOhtml
+NeoVim TIL: Open float with diagnostics | <C-w>d
+NeoVim TIL: Open float with diagnostics | <C-w><C-d>
+NeoVim TIL: Select range (in any buffer) and run :lua to execute highlighted code | :lua
+NeoVim TIL: Select current file and run :lua to execute current file (EVEN IF NOT SAVED) | vaB:lua
+NeoVim TIL: Neovim native commenting: Comment motion | gc<motion>
+NeoVim TIL: Neovim native commenting: Comment line | gcc
+NeoVim TIL: Neovim native commenting: Visual Mode Comment lines | gc
+NeoVim TIL: Neovim native commenting: Text object for largest contiguous block of non-blank commented lines around the cursor | gc
+NeoVim TIL: Neovim native commenting: Delete current comment | dgc
+NeoVim TIL: Neovim native commenting: Uncomment current comment | gcgc
+NeoVim TIL: "When a key is pressed using alt/meta and no mapping exists nvim will behave as <ESC> was pressed before that key" meaning that in insert mode you can do command (Alt+Shift+;) | <A-S-;>
+Neovim TIL: Focus different window | <C-w>p
+Neovim TIL: Visual Mode: Go to start/end of visual selection | o
+Neovim TIL: Number of last line | :=
+Neovim TIL: Evaluate Lua code and print it | :=<LUA>
+Telescope: Show mappings for picker actions (insert mode) | <C-/>
+Telescope: Show mappings for picker actions (normal mode) | ?
+Neovim TIL: Operate on range of lines | :<start_line_number>,<end_line_number>command
+Neovim TIL: Copy current line to mark a (help :t)| :.t'a
+Neovim TIL: Copy mark a line to mark b (help :t) | :'at'b
+Neovim TIL: Move current line to mark a (help :t)| :.m'a
+Neovim TIL: Set register with value of other register | :let @a=@b
+Neovim TIL: Visual Range: Copy value in {} into register "a (clean register a before that) | :'<,'>norm "Ayi{
+Neovim TIL: Append to register a | "A
+Neovim TIL: Make appending to register make new lines | :lua vim.opt.cpoptions:append('>')
+Neovim TIL: Make appending to register stop making new lines | :lua vim.opt.cpoptions:remove('>')
+Neovim TIL: Run macro a on lines using g | :g/<search_string>/norm! @a
+Plugins: nvim-highlight-colors: Toggle showing colors | :HighlightColors Toggle
+Neovim TIL: Insert x times | <x>i
+Neovim TIL: MiniAi: Select without inner spaces | vi(
+Neovim TIL: MiniAi: Select with inner spaces | vi)
+Neovim TIL: MiniAi: Select inside any quotes | viq
+Neovim TIL: MiniAi: Select inside any brackets | vib
+Neovim TIL: MiniAi: Select inside last <text object> | vil<text object>
+Neovim TIL: MiniAi: Select inside next <text object> | vin<text object>
+Neovim TIL: MiniSurround: Add surround | sa<motion/text object><surround>
+Neovim TIL: MiniSurround: Delete surround | sd<surround>
+Neovim TIL: MiniSurround: Replace surround | sr<surround><new_surround>
+Neovim TIL: MiniSurround: Replace last surround | srl<surround><new_surround>
+Neovim TIL: MiniSurround: Replace next surround | srn<surround><new_surround>
+Neovim TIL: MiniOperators: Replace with paste | gR
+Neovim TIL: MiniOperators: Duplicate | gm<text object>
+Neovim TIL: MiniOperators: Exchange 2 things (2 stage, first select then select other to exchange) | ge
+Neovim TIL: MiniOperators: Evaluate | g=
+Neovim TIL: MiniOperators: Sort | gs

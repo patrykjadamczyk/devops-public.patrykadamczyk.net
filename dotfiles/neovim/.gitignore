@@ -1,0 +1,9 @@
+# Ignore Mercurial SCM
+.hgsync
+.hg
+.hgignore
+.hgtags
+# Scratch Files
+scratch/
+scretch/
+.luacheckcache

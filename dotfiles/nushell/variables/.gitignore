@@ -1,0 +1,4 @@
+# Ignore Environment Specific Variables
+*.env.nu
+# Ignore Secret Variables
+*.secret.nu

@@ -1,0 +1,581 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+---
+gui:
+    windowSize: 'normal'
+    scrollHeight: 2
+    language: 'en'
+    timeFormat: '02 Jan 2006 15:04:05' # https://pkg.go.dev/time#Time.Format
+    shortTimeFormat: '15:04'
+    commitLength:
+        show: true
+    mouseEvents: true
+    showFileTree: true
+    showListFooter: true
+    showRandomTip: true
+    showBranchCommitHash: true
+    showBottomLine: true
+    showPanelJumps: true
+    showCommandLog: true
+    nerdFontsVersion: "3"
+    showFileIcons: true
+    commandLogSize: 8
+    # Use the mocha catppuccin theme
+    theme:
+        activeBorderColor:
+            - '#89b4fa'
+            - bold
+        inactiveBorderColor:
+            - '#a6adc8'
+        optionsTextColor:
+            - '#89b4fa'
+        selectedLineBgColor:
+            - '#313244'
+        selectedRangeBgColor:
+            - '#313244'
+        cherryPickedCommitBgColor:
+            - '#45475a'
+        cherryPickedCommitFgColor:
+            - '#89b4fa'
+        unstagedChangesColor:
+            - '#f38ba8'
+        defaultFgColor:
+            - '#cdd6f4'
+        searchingActiveBorderColor:
+            - '#f9e2af'
+git:
+    # commit:
+    #     signOff: true
+    log:
+        order: "topo-order"
+        showGraph: "always"
+    skipHookPrefix: WIP
+    mainBranches:
+        - "master"
+        - "main"
+    autoFetch: true
+    autoRefresh: true
+    fetchAll: true
+    parseEmoji: true
+    overrideGpg: true
+    paging:
+        colorArg: always
+        pager: delta --dark --paging=never
+update:
+    method: "prompt"
+    days: 7
+disableStartupPopups: true
+os:
+    editPreset: "nvim"
+customCommands:
+    -
+        key: "<C-c>"
+        context: "files"
+        description: "Commit conventional commit using Patryk's Conventional Commit"
+        prompts:
+            -
+                title: "What kind of commit is it?"
+                type: "menu"
+                key: "CommitType"
+                options:
+                    -
+                        name: "feat"
+                        value: "feat"
+                        description: "feat: A new feature"
+                    -
+                        name: "fix"
+                        value: "fix"
+                        description: "fix: A bug fix"
+                    -
+                        name: "refactor"
+                        value: "refactor"
+                        description: "refactor: A code change that neither fixes a bug nor adds a feature"
+                    -
+                        name: "test"
+                        value: "test"
+                        description: "test: Adding missing tests or correcting existing tests"
+                    -
+                        name: "chore"
+                        value: "chore"
+                        description: "chore: Related to maintenance tasks, build processes or other non-user-facing changes"
+                    -
+                        name: "build"
+                        value: "build"
+                        description: "build: Changes that affect the build system or external dependencies"
+                    -
+                        name: "perf"
+                        value: "perf"
+                        description: "perf: A code change that improves performance"
+                    -
+                        name: "ci"
+                        value: "ci"
+                        description: "ci: Changes to our CI configuration files and scripts"
+                    -
+                        name: "docs"
+                        value: "docs"
+                        description: "docs: Documentation only changes"
+                    -
+                        name: "style"
+                        value: "style"
+                        description: "style: Changes that do not affect the meaning of the code (whitespace, formatting, missing semi-colons, etc)"
+                    -
+                        name: "revert"
+                        value: "revert"
+                        description: "revert: Reverts a previous commit"
+                    -
+                        name: "deploy"
+                        value: "deploy"
+                        description: "deploy: Deploy stuff or change configuration of deployment"
+                    -
+                        name: "init"
+                        value: "init"
+                        description: "init: Initialize project or subproject"
+                    -
+                        name: "security"
+                        value: "security"
+                        description: "security: Fix security issues"
+                    -
+                        name: "release"
+                        value: "release"
+                        description: "release: Release / version tag, preparing for release, release tools configuration"
+                    -
+                        name: "WIP"
+                        value: "WIP"
+                        description: "WIP: Work in progress"
+                    -
+                        name: "deps"
+                        value: "deps"
+                        description: "deps: Dependencies"
+                    -
+                        name: "deps-upgrade"
+                        value: "deps-upgrade"
+                        description: "deps-upgrade: Dependencies"
+                    -
+                        name: "deps-downgrade"
+                        value: "deps-downgrade"
+                        description: "deps-downgrade: Dependencies"
+                    -
+                        name: "deps-add"
+                        value: "deps-add"
+                        description: "deps-add: Dependencies"
+                    -
+                        name: "deps-rm"
+                        value: "deps-rm"
+                        description: "deps-rm: Dependencies"
+                    -
+                        name: "deps-pin"
+                        value: "deps-pin"
+                        description: "deps-pin: Dependencies"
+                    -
+                        name: "i18n"
+                        value: "i18n"
+                        description: "i18n: Internationalization"
+                    -
+                        name: "l10n"
+                        value: "l10n"
+                        description: "l10n: Localization"
+                    -
+                        name: "g11n"
+                        value: "g11n"
+                        description: "g11n: Globalization"
+                    -
+                        name: "merge"
+                        value: "merge"
+                        description: "merge: Merge branches"
+                    -
+                        name: "a11y"
+                        value: "a11y"
+                        description: "a11y: Accessibility"
+                    -
+                        name: "deprecate"
+                        value: "deprecate"
+                        description: "deprecate: Deprecate features"
+                    -
+                        name: "experiment"
+                        value: "experiment"
+                        description: "experiment: Experimenting with new features"
+            -
+                title: "Commit scope?"
+                type: "input"
+                key: "CommitScope"
+                initialValue: ""
+            -
+                title: "Are you commiting breaking changes?"
+                type: "menu"
+                key: "CommitBreaking"
+                options:
+                    -
+                        name: "no"
+                        value: ""
+                    -
+                        name: "yes"
+                        value: "!"
+            -
+                title: "Commit title"
+                type: "input"
+                key: "CommitTitle"
+                initialValue: ""
+            -
+                type: "confirm"
+                key: "Confirm"
+                title: "Commit"
+                body: |-
+                    Are you sure you want to commit?
+                    Note: If you want to add additional informations (description) use r or R key on created commit.
+        command: 'git commit -m "{{.Form.CommitType}}{{if ne .Form.CommitScope ""}}({{.Form.CommitScope}}){{end}}{{.Form.CommitBreaking}}: {{.Form.CommitTitle}}"'
+    # -
+    #     key: "<C-x>"
+    #     context: "files"
+    #     description: "Commit conventional commit with advanced options using Patryk's Conventional Commit"
+    #     prompts:
+    #         -
+    #             title: "What kind of commit is it?"
+    #             type: "menu"
+    #             key: "CommitType"
+    #             options:
+    #                 -
+    #                     name: "feat"
+    #                     value: "feat"
+    #                     description: "feat: A new feature"
+    #                 -
+    #                     name: "fix"
+    #                     value: "fix"
+    #                     description: "fix: A bug fix"
+    #                 -
+    #                     name: "refactor"
+    #                     value: "refactor"
+    #                     description: "refactor: A code change that neither fixes a bug nor adds a feature"
+    #                 -
+    #                     name: "test"
+    #                     value: "test"
+    #                     description: "test: Adding missing tests or correcting existing tests"
+    #                 -
+    #                     name: "chore"
+    #                     value: "chore"
+    #                     description: "chore: Related to maintenance tasks, build processes or other non-user-facing changes"
+    #                 -
+    #                     name: "build"
+    #                     value: "build"
+    #                     description: "build: Changes that affect the build system or external dependencies"
+    #                 -
+    #                     name: "perf"
+    #                     value: "perf"
+    #                     description: "perf: A code change that improves performance"
+    #                 -
+    #                     name: "ci"
+    #                     value: "ci"
+    #                     description: "ci: Changes to our CI configuration files and scripts"
+    #                 -
+    #                     name: "docs"
+    #                     value: "docs"
+    #                     description: "docs: Documentation only changes"
+    #                 -
+    #                     name: "style"
+    #                     value: "style"
+    #                     description: "style: Changes that do not affect the meaning of the code (whitespace, formatting, missing semi-colons, etc)"
+    #                 -
+    #                     name: "revert"
+    #                     value: "revert"
+    #                     description: "revert: Reverts a previous commit"
+    #                 -
+    #                     name: "deploy"
+    #                     value: "deploy"
+    #                     description: "deploy: Deploy stuff or change configuration of deployment"
+    #                 -
+    #                     name: "init"
+    #                     value: "init"
+    #                     description: "init: Initialize project or subproject"
+    #                 -
+    #                     name: "security"
+    #                     value: "security"
+    #                     description: "security: Fix security issues"
+    #                 -
+    #                     name: "release"
+    #                     value: "release"
+    #                     description: "release: Release / version tag, preparing for release, release tools configuration"
+    #                 -
+    #                     name: "WIP"
+    #                     value: "WIP"
+    #                     description: "WIP: Work in progress"
+    #                 -
+    #                     name: "deps"
+    #                     value: "deps"
+    #                     description: "deps: Dependencies"
+    #                 -
+    #                     name: "deps-upgrade"
+    #                     value: "deps-upgrade"
+    #                     description: "deps-upgrade: Dependencies"
+    #                 -
+    #                     name: "deps-downgrade"
+    #                     value: "deps-downgrade"
+    #                     description: "deps-downgrade: Dependencies"
+    #                 -
+    #                     name: "deps-add"
+    #                     value: "deps-add"
+    #                     description: "deps-add: Dependencies"
+    #                 -
+    #                     name: "deps-rm"
+    #                     value: "deps-rm"
+    #                     description: "deps-rm: Dependencies"
+    #                 -
+    #                     name: "deps-pin"
+    #                     value: "deps-pin"
+    #                     description: "deps-pin: Dependencies"
+    #                 -
+    #                     name: "i18n"
+    #                     value: "i18n"
+    #                     description: "i18n: Internationalization"
+    #                 -
+    #                     name: "l10n"
+    #                     value: "l10n"
+    #                     description: "l10n: Localization"
+    #                 -
+    #                     name: "g11n"
+    #                     value: "g11n"
+    #                     description: "g11n: Globalization"
+    #                 -
+    #                     name: "merge"
+    #                     value: "merge"
+    #                     description: "merge: Merge branches"
+    #                 -
+    #                     name: "a11y"
+    #                     value: "a11y"
+    #                     description: "a11y: Accessibility"
+    #                 -
+    #                     name: "deprecate"
+    #                     value: "deprecate"
+    #                     description: "deprecate: Deprecate features"
+    #                 -
+    #                     name: "experiment"
+    #                     value: "experiment"
+    #                     description: "experiment: Experimenting with new features"
+    #         -
+    #             title: "Commit scope?"
+    #             type: "input"
+    #             key: "CommitScope"
+    #             initialValue: ""
+    #         -
+    #             title: "Are you commiting breaking changes?"
+    #             type: "menu"
+    #             key: "CommitBreaking"
+    #             options:
+    #                 -
+    #                     name: "no"
+    #                     value: ""
+    #                 -
+    #                     name: "yes"
+    #                     value: "!"
+    #         -
+    #             title: "Commit title"
+    #             type: "input"
+    #             key: "CommitTitle"
+    #             initialValue: ""
+    #         -
+    #             type: "confirm"
+    #             key: "AConfirm"
+    #             title: "Advanced commit fields"
+    #             body: |-
+    #                 Next fields take format of user meaning:
+    #                 John Doe <john.doe@example.com>
+    #         -
+    #             title: "Co-authored-by - Specified person co-authored the commit's changes"
+    #             type: "input"
+    #             key: "CoAuthoredBy"
+    #             initialValue: ""
+    #         -
+    #             title: "Acked-by - Specified person liked the commit's changes"
+    #             type: "input"
+    #             key: "AckedBy"
+    #             initialValue: ""
+    #         -
+    #             title: "Reviewed-by - Specified person reviewed and is completely satisfied with the commit"
+    #             type: "input"
+    #             key: "ReviewedBy"
+    #             initialValue: ""
+    #         -
+    #             title: "Tested-by - Specified person applied the commit's changes and tested them"
+    #             type: "input"
+    #             key: "TestedBy"
+    #             initialValue: ""
+    #         -
+    #             title: "Helped-by - Specified person helped with the commit"
+    #             type: "input"
+    #             key: "HelpedBy"
+    #             initialValue: ""
+    #         -
+    #             type: "confirm"
+    #             key: "BConfirm"
+    #             title: "Advanced commit fields"
+    #             body: |-
+    #                 Next fields take format of issue meaning:
+    #                 #15
+    #                 or
+    #                 TRELLO-15
+    #                 for multiple issues use comma as separator
+    #         -
+    #             title: "Implements - Commit implements features"
+    #             type: "input"
+    #             key: "Implements"
+    #             initialValue: ""
+    #         -
+    #             title: "Fixes - Commit fixes issues"
+    #             type: "input"
+    #             key: "Fixes"
+    #             initialValue: ""
+    #         -
+    #             title: "Closes - Commit closes issues or pull requests"
+    #             type: "input"
+    #             key: "Closes"
+    #             initialValue: ""
+    #         -
+    #             title: "Refs - Commit references another commit by its hash ID"
+    #             type: "input"
+    #             key: "Refs"
+    #             initialValue: ""
+    #         -
+    #             title: "See also - Commit references another commit by its hash ID"
+    #             type: "input"
+    #             key: "SeeAlso"
+    #             initialValue: ""
+    #         -
+    #             type: "confirm"
+    #             key: "CConfirm"
+    #             title: "Advanced commit fields"
+    #             body: |-
+    #                 Next field is signoff
+    #                 Signed-off-by - You certify that you have right to submit this commit and agree to DCO
+    #                 DCO - https://developercertificate.org/
+    #         # https://developercertificate.org/
+    #         -
+    #             title: "Signed-off-by - You certify that you have right to submit this commit and agree to DCO"
+    #             key: "SignedOffBy"
+    #             type: "menu"
+    #             options:
+    #                 -
+    #                     name: "no"
+    #                     value: ""
+    #                 -
+    #                     name: "yes"
+    #                     value: "--signoff"
+    #         -
+    #             type: "confirm"
+    #             key: "Confirm"
+    #             title: "Commit"
+    #             body: |-
+    #                 Are you sure you want to commit?
+    #                 Note: If you want to add additional informations (description) use r or R key on created commit.
+    #             command: 'git commit -m "{{.Form.CommitType}}{{if ne .Form.CommitScope ""}}({{.Form.CommitScope}}){{end}}{{.Form.CommitBreaking}}: {{.Form.CommitTitle}}" {{if ne .Form.CoAuthoredBy ""}}--trailer "Co-authored-by:{{.Form.CoAuthoredBy}}"{{end}} {{if ne .Form.AckedBy ""}}--trailer "Acked-by:{{.Form.AckedBy}}"{{end}} {{if ne .Form.ReviewedBy ""}}--trailer "Reviewed-by:{{.Form.ReviewedBy}}"{{end}} {{if ne .Form.TestedBy ""}}--trailer "Tested-by:{{.Form.TestedBy}}"{{end}} {{if ne .Form.HelpedBy ""}}--trailer "Helped-by:{{.Form.HelpedBy}}"{{end}} {{if ne .Form.Implements ""}}--trailer "Implements:{{.Form.Implements}}"{{end}} {{if ne .Form.Fixes ""}}--trailer "Fixes:{{.Form.Fixes}}"{{end}} {{if ne .Form.Closes ""}}--trailer "Closes:{{.Form.Closes}}"{{end}} {{if ne .Form.Refs ""}}--trailer "Refs:{{.Form.Refs}}"{{end}} {{if ne .Form.SeeAlso ""}}--trailer "See also:{{.Form.SeeAlso}}"{{end}} {{if ne .Form.SignedOffBy ""}}--signoff{{end}}'
+    -
+        # key: "<C-c>"
+        context: "global"
+        prompts:
+            -
+                title: "What kind of commit is it?"
+                type: "menu"
+                key: "CommitType"
+                options:
+                    -
+                        name: "build"
+                        value: "build"
+                        description: "build: Changes that affect the build system or external dependencies"
+                    -
+                        name: "ci"
+                        value: "ci"
+                        description: "ci: Changes to our CI configuration files and scripts"
+                    -
+                        name: "docs"
+                        value: "docs"
+                        description: "docs: Documentation only changes"
+                    -
+                        name: "feat"
+                        value: "feat"
+                        description: "feat: A new feature"
+                    -
+                        name: "fix"
+                        value: "fix"
+                        description: "fix: A bug fix"
+                    -
+                        name: "perf"
+                        value: "perf"
+                        description: "perf: A code change that improves performance"
+                    -
+                        name: "refactor"
+                        value: "refactor"
+                        description: "refactor: A code change that neither fixes a bug nor adds a feature"
+                    -
+                        name: "style"
+                        value: "style"
+                        description: "style: Changes that do not affect the meaning of the code (whitespace, formatting, missing semi-colons, etc)"
+                    -
+                        name: "test"
+                        value: "test"
+                        description: "test: Adding missing tests or correcting existing tests"
+                    -
+                        name: "chore"
+                        value: "chore"
+                        description: "chore: Related to maintenance tasks, build processes or other non-user-facing changes"
+                    -
+                        name: "revert"
+                        value: "revert"
+                        description: "revert: Reverts a previous commit"
+            -
+                title: "Commit scope?"
+                type: "input"
+                key: "CommitScope"
+                initialValue: ""
+            -
+                title: "Are you commiting breaking changes?"
+                type: "menu"
+                key: "CommitBreaking"
+                options:
+                    - value: "no"
+                    - value: "yes"
+            -
+                title: "Commit title"
+                type: "input"
+                key: "CommitTitle"
+                initialValue: ""
+            -
+                type: "confirm"
+                key: "Confirm"
+                title: "Commit"
+                body: "Are you sure you want to commit?"
+        command: 'git commit -m "{{.Form.CommitType}}{{if ne .Form.CommitScope ""}}({{.Form.CommitScope}}){{end}}{{if eq .Form.CommitBreaking "yes"}}!{{end}}: {{.Form.CommitTitle}}"'
+        description: "Commit conventional commit"
+    -
+        context: "localBranches"
+        command: "git push --force-with-lease {{.SelectedLocalBranch.UpstreamRemote}} {{.SelectedLocalBranch.Name}}"
+        description: "Force push selected branch with lease"
+    -
+        context: "localBranches"
+        prompts:
+            -
+                title: "Default branch for current repository"
+                type: "menu"
+                key: "DefaultBranch"
+                options:
+                    - value: "main"
+                    - value: "master"
+                    - value: "dev"
+                    - value: "develop"
+            -
+                title: "Name of the feature"
+                type: "input"
+                key: "FeatureName"
+                initialValue: ""
+        command: "git checkout {{.Form.DefaultBranch}}; git pull origin {{.Form.DefaultBranch}}; git checkout -b feat/{{.Form.FeatureName}}"
+        description: "Start working on new feature using branch."
+    -
+        context: "global"
+        prompts:
+            -
+                title: "Commit title"
+                type: "input"
+                key: "CommitTitle"
+                initialValue: ""
+            -
+                type: "confirm"
+                key: "Confirm"
+                title: "Commit"
+                body: "Are you sure you want to commit?"
+        command: 'git commit --allow-empty -m "{{.Form.CommitTitle}}"'
+        description: "Commit empty commit"

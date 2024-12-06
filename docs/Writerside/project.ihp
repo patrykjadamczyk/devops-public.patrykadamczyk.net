@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ihp SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/ihp.dtd">
+
+<ihp version="2.0">
+    <topics dir="topics"/>
+    <images dir="images"/>
+    <instance src="snip-bash.tree" web-path="/snip-bash/" version="1.0"/>
+    <instance src="mdnotes.tree" web-path="/mdnotes/" version="1.0"/>
+    <instance src="snip-teamcity.tree" web-path="/snip-teamcity/" version="1.0"/>
+    <instance src="snip-python.tree" web-path="/snip-python/" version="1.0"/>
+    <instance src="snip-powershell.tree" web-path="/snip-powershell/" version="1.0"/>
+</ihp>

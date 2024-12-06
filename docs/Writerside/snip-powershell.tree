@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/product-profile.dtd">
+
+<instance-profile id="snip-powershell"
+                  name="Snippets - PowerShell"
+                  start-page="snippets-powershell.md" is-library="true">
+
+    <toc-element topic="snippets-powershell.md"/>
+    <toc-element topic="Snippets-Powershell-CheckOS.md"/>
+    <toc-element topic="Snippets-Powershell-CheckSSLCert.md"/>
+    <toc-element topic="Snippets-PowerShell-DockerAndWSLCleanup.md"/>
+    <toc-element topic="Snippets-PowerShell-CrossplatformGetDisk.md"/>
+    <toc-element topic="Snippets-PowerShell-PackageManager.md"/>
+    <toc-element topic="Snippets-PowerShell-StartDefaultBrowserWithURL.md"/>
+    <toc-element topic="Snippets-PowerShell-RandomSnippets.md"/>
+    <toc-element topic="Snippets-PowerShell-TelegramNotifications.md"/>
+    <toc-element topic="Snippets-PowerShell-ProfileTries.md"/>
+</instance-profile>

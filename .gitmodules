@@ -1,0 +1,8 @@
+[submodule "dotfiles/Alacritty/catppuccin"]
+	path = dotfiles/Alacritty/catppuccin
+	url = https://github.com/catppuccin/alacritty.git
+	branch = main
+[submodule "dotfiles/nushell/external_packages/nu_scripts"]
+	path = dotfiles/nushell/external_packages/nu_scripts
+	url = git@github.com:nushell/nu_scripts.git
+	branch = main

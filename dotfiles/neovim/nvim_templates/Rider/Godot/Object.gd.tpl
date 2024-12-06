@@ -1,0 +1,2 @@
+;; gdscript
+extends Node

@@ -1,0 +1,28 @@
+# Keymaps from PSReadline
+
+- `Ctrl+x` - *Delete selected region placing deleted text in the system clipboard*
+- `Ctrl+End` - *Delete text from the cursor to the end of the input*
+- `Ctrl+z` - *Undo previous edit*
+- `Alt+.` - *Copy the text of the last argument to the input*
+- `Ctrl+]` - *Go to matching brace*
+- `Alt+F7` - *Clear History*
+- `Ctrl+s` - *Forward Search History*
+- `Ctrl+r` - *Backward Search History*
+- `Ctrl+u` - *Clear input*
+- `F8` - *Search for previous item in the history based on current input*
+- `Shift+F8` - *Search for next item in the history based on current input*
+- `Ctrl+Space` - *Autocomplete*
+- `Tab` / `Shift+Tab` - *TabComplete*
+- `F2` - *Switch between prediction view* (It switches between the inline (prediction in input) and list view (prediction under input))
+- `Ctrl+l` - *Clear screen*
+- `PageUp` / `PageDown` / `Ctrl+PageUp` / `Ctrl+PageDown` - *Scroll the display*
+- `F1` - *Show help for the command at the cursor*
+- `Ctrl+Alt+?` - *Show all key bindings of PSReadline*
+- `Alt+h` - *Show help for the parameter at the cursor*
+- `Ctrl+a` - *Select all*
+- `Shift+<keys>` - *Select*
+- `F3` / `Shift-F3` - *Search for character*
+- `Ctrl+y` - *Autocomplete using FZF*
+- `Ctrl+t` - *Autocomplete using FZF inside input*
+- `Ctrl+r` - *Search History using FZF*
+- `Alt+c` - *Change cwd using FZF*

@@ -1,0 +1,10 @@
+-- Set Win Fix width to make sure that sidebar have always same length
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--     callback = function(args)
+--         local buf = args["buf"]
+--         if string.match(vim.fn.bufname(buf), "^SidebarNvim_.*") then
+--             vim.cmd("SidebarNvimResize 30")
+--             vim.cmd("set winfixwidth")
+--         end
+--     end,
+-- })

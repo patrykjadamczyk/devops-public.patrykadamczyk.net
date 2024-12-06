@@ -1,0 +1,1 @@
+# About Snippets Bash

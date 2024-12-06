@@ -1,0 +1,12 @@
+;; html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+@RenderBody()
+
+</body>
+</html>

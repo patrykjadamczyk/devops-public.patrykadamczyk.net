@@ -1,0 +1,17 @@
+-- PatVimKeyMapSet({
+--   'n',
+--   '<leader>fc',
+--   function()
+--       local global_cwd = vim.fn.getcwd(-1, -1)
+--       require("nvim-tree.api").tree.change_root(global_cwd)
+--   end,
+--   { desc ='Change Root To Global CWD' }
+-- })
+
+-- vim.cmd([[silent! unmap <C-n>]])
+-- PatVimKeyMapSet({
+--   'n',
+--   '<C-n>',
+--   '<cmd>NvimTreeToggle<cr>',
+--   { desc ='Toggle Nvim Tree' }
+-- })

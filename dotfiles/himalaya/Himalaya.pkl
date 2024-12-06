@@ -1,0 +1,41 @@
+module Himalaya
+
+typealias EmailBackendEnum = "imap" | "maildir"
+typealias EmailMessageSendBackendEnum = "smtp" | "sendmail"
+typealias EmailProtocolEncryptionEnumString = "tls" | "start-tls" | "none"
+typealias EmailProtocolEncryptionEnum = EmailProtocolEncryptionEnumString | Boolean
+
+class EmailPasswdConfiguration {
+    keyring: String
+}
+
+class EmailProtocolConfiguration {
+    host: String
+    port: Int
+    encryption: EmailProtocolEncryptionEnum
+    login: String
+    passwd: EmailPasswdConfiguration
+}
+
+class EmailSyncConfiguration {
+    enable: Boolean
+}
+
+class EmailMessageSendConfiguration {
+    backend: EmailMessageSendBackendEnum
+}
+
+class EmailMessageConfiguration {
+    send: EmailMessageSendConfiguration
+}
+
+class EmailConfiguration {
+    default: Boolean
+    email: String
+    `display-name`: String
+    `downloads-dir`: String
+    backend: EmailBackendEnum
+    imap: EmailProtocolConfiguration
+    smtp: EmailProtocolConfiguration
+    message: EmailMessageConfiguration
+}

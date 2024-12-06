@@ -1,0 +1,20 @@
+{
+    "workspace.library": [
+        "C:\\Users\\patry\\AppData\\Local\\nvim\\plugged\\neodev.nvim\\types\\stable",
+        "C:\\Users\\patry\\scoop\\apps\\neovim\\0.9.0\\share\\nvim\\runtime\\lua",
+        "${3rd}/luassert/library",
+        "${3rd}/luv/lib",
+        "${3rd}/luv/library"
+    ],
+    "Lua.workspace.library": [
+        "C:\\Users\\patry\\AppData\\Local\\nvim\\plugged\\neodev.nvim\\types\\stable",
+        "C:\\Users\\patry\\scoop\\apps\\neovim\\0.9.0\\share\\nvim\\runtime\\lua",
+        "${3rd}/luassert/library",
+        "${3rd}/luv/lib",
+        "${3rd}/luv/library"
+    ],
+    "diagnostics.disable": [
+        "different-requires"
+    ],
+    "hint.enable": true
+}

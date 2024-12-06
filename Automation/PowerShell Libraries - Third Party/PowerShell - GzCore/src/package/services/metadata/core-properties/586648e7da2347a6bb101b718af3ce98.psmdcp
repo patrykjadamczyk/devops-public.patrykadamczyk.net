@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Michael Herndon</dc:creator>
+  <dc:description>Gz Core
+
+Module contains common use functions such as</dc:description>
+  <dc:identifier>Gz-Core</dc:identifier>
+  <version>0.1.0</version>
+  <keywords>Gz Gainz Out-Json ConvertTo-Hashtable Test-OsPlatform Test-UserIsAdministrator PSModule PSIncludes_Function PSFunction_Add-DynamicParameter PSFunction_ConvertTo-Hashtable PSFunction_New-DynamicParameter PSFunction_Out-Json PSFunction_Out-FileNoBom PSFunction_Read-GzModuleSetting PSFunction_Set-XFileMode PSFunction_Set-XFileOwner PSFunction_Test-64Bit PSFunction_Test-OsPlatform PSFunction_Test-UserIsAdministrator PSFunction_Write-GzModuleSetting PSCommand_Add-DynamicParameter PSCommand_ConvertTo-Hashtable PSCommand_New-DynamicParameter PSCommand_Out-Json PSCommand_Out-FileNoBom PSCommand_Read-GzModuleSetting PSCommand_Set-XFileMode PSCommand_Set-XFileOwner PSCommand_Test-64Bit PSCommand_Test-OsPlatform PSCommand_Test-UserIsAdministrator PSCommand_Write-GzModuleSetting</keywords>
+  <lastModifiedBy>NuGet, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;Microsoft Windows NT 6.2.9200.0;.NET Framework 4.7.2</lastModifiedBy>
+</coreProperties>

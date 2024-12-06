@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: '3'
+
+tasks:
+    update-config:
+        desc: "Install configuration and software"
+        cmds:
+            - pwsh ./Install.ps1
+    expand-config:
+        desc: "Expand configuration file"
+        cmds:
+            - pwsh ./Dotfiles-Expander.ps1
+    install-config:
+        desc: "Install configuration"
+        cmds:
+            - pwsh ./Dotfiles-Installer.ps1
+    config-wo-install:
+        desc: "Install configuration without installing software"
+        cmds:
+            - task: expand-config
+            - task: install-config
+    config:
+        desc: "Install configuration and software"
+        cmds:
+            - task: update-config
+    test-alacritty:
+        desc: "Test Alacritty Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        sources:
+            - ./dotfiles/Alacritty/**/*.yml
+            - ./dotfiles/Alacritty/**/*.yaml
+        cmds:
+            - alacritty --config-file ./dotfiles/Alacritty/alacritty.yml
+    test-lite-nvim:
+        desc: "Test Lite Neovim Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        env:
+            NVIM_APPNAME: "lite-nvim"
+        sources:
+            - ./dotfiles/lite-nvim/**/*.vim
+            - ./dotfiles/lite-nvim/**/*.lua
+        cmds:
+            - alacritty -e nvim
+    test-nvim:
+        desc: "Test Neovim Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        env:
+            NVIM_APPNAME: "nvim"
+        sources:
+            - ./dotfiles/neovim/**/*.vim
+            - ./dotfiles/neovim/**/*.lua
+        cmds:
+            - alacritty -e nvim
+    test-orgmode-nvim:
+        desc: "Test Org-Mode Neovim Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        env:
+            NVIM_APPNAME: "orgmode-nvim"
+        sources:
+            - ./dotfiles/orgmode-nvim/**/*.vim
+            - ./dotfiles/orgmode-nvim/**/*.lua
+        cmds:
+            - alacritty -e nvim
+    test-pwsh:
+        desc: "Test PowerShell Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        sources:
+            - ./dotfiles/pwsh/**/*.ps1
+        cmds:
+            - pwsh
+    test-nu:
+        desc: "Test NuShell Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        sources:
+            - ./dotfiles/nushell/**/*.nu
+        cmds:
+            - nu
+    test-wezterm:
+        desc: "Test WezTerm Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        sources:
+            - ./dotfiles/wezterm/**/*.lua
+            - ./dotfiles/wezterm/**/*.jpg
+            - ./dotfiles/wezterm/**/*.jpeg
+            - ./dotfiles/wezterm/**/*.gif
+            - ./dotfiles/wezterm/**/*.png
+        cmds:
+            - wezterm --config-file ./dotfiles/wezterm/wezterm.lua
+    test-zellij:
+        desc: "Test Zellij Configuration"
+        watch: true
+        method: timestamp
+        run: always
+        sources:
+            - ./dotfiles/zellij/**/*.kdl
+        cmds:
+            - zellij --config ./dotfiles/zellij/config.kdl

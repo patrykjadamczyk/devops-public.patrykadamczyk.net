@@ -1,0 +1,25 @@
+Not working:
+
+Extend Base -  F1-F12 > F1-F12 (no media keys) // Fixed by enabling that in extend
+Extend Base - BackSpace - BackSpace // DISABLED (https://github.com/DreymaR/BigBagKbdTrixXKB/blob/master/xkb-data_xmod/xkb/symbols/extend#L66)
+Extend Base - Enter -> Enter // DISABLED (https://github.com/DreymaR/BigBagKbdTrixXKB/blob/master/xkb-data_xmod/xkb/symbols/extend#L66)
+
+
+Notes:
+Extend Base - GD (Up Down) <> (Left Right) BKM - LMB CMB RMB
+Extend Base - Numpad (12346789) -> Mouse Movement
+Extend Base - Numpad 5 -> LMB
+Extend Base - Numpad 0 -> Hold LMB (. stop)
+Extend Base - ~ -> Pointer Keys
+Extend + AltGr -> Extend 2
+
+
+Polish
+AltGr+/ l -> ł
+AltGr+. z -> ż
+AltGr+' z -> ź
+AltGr+8 a -> ą
+AltGr+8 e -> ę
+AltGr+' n -> ń
+AltGr+' o -> ó
+AltGr+k -> ć

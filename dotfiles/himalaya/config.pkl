@@ -1,0 +1,48 @@
+import "@toml/toml.pkl"
+import "Himalaya.pkl"
+
+output {
+  renderer = new toml.Renderer {}
+}
+
+class BasicEmailConfiguration {
+    default: Boolean
+    email: String
+    name: String
+    unique_name: String
+    mailhost: String
+}
+
+function MakeEmail(m: BasicEmailConfiguration): Himalaya.EmailConfiguration = new {
+    default = m.default
+    email = m.email
+    `display-name` = m.name
+    `downloads-dir` = "~/Downloads"
+    backend = "imap"
+    message = new {
+        send = new {
+            backend = "smtp"
+        }
+    }
+    imap = new {
+        host = m.mailhost
+        port = 993
+        encryption = "tls"
+        login = m.email
+        passwd = new {
+            keyring = "\(m.unique_name)-imap-passwd"
+        }
+    }
+    smtp = new {
+        host = m.mailhost
+        port = 465
+        encryption = "tls"
+        login = m.email
+        passwd = new {
+            keyring = "\(m.unique_name)-smtp-passwd"
+        }
+    }
+}
+
+accounts = new {
+}

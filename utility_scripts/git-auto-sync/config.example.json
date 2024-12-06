@@ -1,0 +1,12 @@
+{
+    "repositories" : [
+        {
+            "path": "/home/patryk/.config/neorg",
+            "filter": "*.norg"
+        },
+        {
+            "path": "/home/patryk/.vsnip",
+            "filter": "*.json"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "msbuild": {
+        "EnablePackageAutoRestore": true,
+        "loadProjectsOnDemand": true
+    },
+    "script": {
+        "enabled": true
+    },
+    "FormattingOptions": {
+        "EnableEditorConfigSupport": true,
+        "OrganizeImports": true,
+        "NewLine": "\n",
+        "UseTabs": false,
+        "TabSize": 4,
+        "IndentationSize": 4
+    },
+    "RoslynExtensionsOptions": {
+        "enableDecompilationSupport": true,
+        "enableAnalyzersSupport": true,
+        "enableImportCompletion": true,
+        "inlayHintsOptions": {
+            "enableForParameters": true,
+            "forLiteralParameters": true,
+            "forIndexerParameters": true,
+            "forObjectCreationParameters": true,
+            "forOtherParameters": true,
+            "suppressForParametersThatDifferOnlyBySuffix": false,
+            "suppressForParametersThatMatchMethodIntent": false,
+            "suppressForParametersThatMatchArgumentName": false,
+            "enableForTypes": true,
+            "forImplicitVariableTypes": true,
+            "forLambdaParameterTypes": true,
+            "forImplicitObjectCreation": true
+        }
+    }
+}

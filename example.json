@@ -1,0 +1,31 @@
+{
+    "sections": [
+        {
+            "title": "Section 1",
+            "os": ["Windows", "Linux", "MacOS"],
+            "items": [
+                {
+                    "type": "file",
+                    "file": "test2/example.txt",
+                    "location": "./test/expander.ps1",
+                    "os": "Linux"
+                },
+                {
+                    "type": "symlink",
+                    "file": "test2/example.txt",
+                    "location": "./test/expander.ps1.link"
+                },
+                {
+                    "type": "directory",
+                    "directory": "test2",
+                    "location": "./test/test2"
+                },
+                {
+                    "type": "directory-symlink",
+                    "directory": "test2",
+                    "location": "./test/test2.link"
+                }
+            ]
+        }
+    ]
+}
