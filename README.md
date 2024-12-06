@@ -15,7 +15,7 @@ This project is meant to be entrypoint to setup my environment.
 ## Installation
 
 ```bash
-git clone git@github.com:patrykjadamczyk/devops-public.patrykadamczyk.net.git ~/go/src/devops.patrykadamczyk.net
+git clone --recurse-submodules git@github.com:patrykjadamczyk/devops-public.patrykadamczyk.net.git ~/go/src/devops.patrykadamczyk.net
 cd ~/go/src/devops.patrykadamczyk.net
 # On system having PowerShell Core (aka PowerShell 7+)
 # Note this can install Nix on unix system if needed where nushell version cant for now
